@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-type PrizeData = {
+export type PrizeData = {
   option: string;
   price: number;
   description: string;

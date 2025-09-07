@@ -5,18 +5,21 @@ import ProgramRulesSection from "@components/ProgramRulesSection";
 import BeefCarousel from "@components/BeefCarousel";
 import LocationList from "@components/LocationList";
 import Footer from "@/components/Footer";
-import PrizePopup from "@components/PrizePopup";
+import PrizePopup, { PrizeData } from "@components/PrizePopup";
 
 export default function Home() {
   const [prizeResult, setPrizeResult] = useState<{
     resultIdx: number | null;
-    data: any;
+    data: PrizeData | null;
   }>({
     resultIdx: null,
     data: null
   });
 
-  const handlePrizeResult = (resultIdx: number | null, data: any) => {
+  const handlePrizeResult = (
+    resultIdx: number | null,
+    data: PrizeData | null
+  ) => {
     setPrizeResult({ resultIdx, data });
   };
 
