@@ -120,9 +120,7 @@ export default function PrizePopup({
         } catch {}
       }
       window.open(
-        `https://www.messenger.com/t/xyz.63631?text=${encodeURIComponent(
-          code
-        )}`,
+        `https://www.messenger.com/t/xyz.63631?ref=${encodeURIComponent(code)}`,
         "_blank"
       );
     }
