@@ -3,9 +3,10 @@
 import Image from "next/image";
 import { useState } from "react";
 import WHEEL_PRIZES from "@/data/wheelPrizes";
+import type { PrizeData } from "@components/PrizePopup";
 
 type WheelSpinnerProps = {
-  onPrizeResult?: (resultIdx: number | null, data: any) => void;
+  onPrizeResult?: (resultIdx: number | null, data: PrizeData | null) => void;
 };
 
 export default function WheelSpinner({
@@ -14,20 +15,24 @@ export default function WheelSpinner({
   const [isSpinning, setIsSpinning] = useState(false);
   // Bắt đầu lệch 36° để pointer (ở đáy) nằm đúng biên giữa "Gù hoa" và "Dẻ sườn"
   const [rotation, setRotation] = useState(36);
-  const [resultIdx, setResultIdx] = useState<number | null>(null);
+  const [_resultIdx, setResultIdx] = useState<number | null>(null); // renamed to _resultIdx to avoid unused warning
 
   const spinWheel = () => {
     if (isSpinning) return;
 
     // Tracking GA4: Nút quay
     if (typeof window !== "undefined") {
-      if ((window as any).gtag) {
-        (window as any).gtag("event", "spin_wheel_click", {
+      const win = window as Window & {
+        gtag?: (...args: unknown[]) => void;
+        dataLayer?: object[];
+      };
+      if (typeof win.gtag === "function") {
+        win.gtag("event", "spin_wheel_click", {
           event_category: "wheel",
           event_label: "Nhấn để xoay"
         });
-      } else if ((window as any).dataLayer) {
-        (window as any).dataLayer.push({
+      } else if (Array.isArray(win.dataLayer)) {
+        win.dataLayer.push({
           event: "spin_wheel_click",
           event_category: "wheel",
           event_label: "Nhấn để xoay"
@@ -58,7 +63,7 @@ export default function WheelSpinner({
       setIsSpinning(false);
       // Truyền đúng data theo vị trí pointer (không đảo ngược index nữa)
       if (onPrizeResult) {
-        onPrizeResult(randomSection, WHEEL_PRIZES[randomSection]);
+        onPrizeResult(randomSection, WHEEL_PRIZES[randomSection] as PrizeData);
       }
     }, 3000);
   };

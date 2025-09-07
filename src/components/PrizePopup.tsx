@@ -56,13 +56,18 @@ export default function PrizePopup({
   const handleClaim = async () => {
     // Tracking GA4: Nhận mã
     if (typeof window !== "undefined") {
-      if ((window as any).gtag) {
-        (window as any).gtag("event", "claim_code_click", {
+      // Use type assertion for window.gtag and window.dataLayer
+      const win = window as Window & {
+        gtag?: (...args: unknown[]) => void;
+        dataLayer?: object[];
+      };
+      if (typeof win.gtag === "function") {
+        win.gtag("event", "claim_code_click", {
           event_category: "prize",
           event_label: "Nhận mã"
         });
-      } else if ((window as any).dataLayer) {
-        (window as any).dataLayer.push({
+      } else if (Array.isArray(win.dataLayer)) {
+        win.dataLayer.push({
           event: "claim_code_click",
           event_category: "prize",
           event_label: "Nhận mã"
