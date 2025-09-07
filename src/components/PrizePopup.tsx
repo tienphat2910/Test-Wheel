@@ -92,7 +92,7 @@ export default function PrizePopup({
         }
       } else {
         setCopyStatus(
-          "Không thể tự động copy, vui lòng copy thủ công mã bên dưới."
+          "Không thể tự động copy, vui lòng copy thủ công mã bên dướ."
         );
       }
       if (copied) {
