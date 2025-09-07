@@ -92,13 +92,13 @@ export default function PrizePopup({
         }
       } else {
         setCopyStatus(
-          "Không thể tự động copy, vui lòng copy thủ công mã bên dướ."
+          "Không thể tự động copy, vui lòng copy thủ công mã bên dưới."
         );
       }
       if (copied) {
         setTimeout(() => {
           window.open(
-            `https://www.messenger.com/t/xyz.63631?ref=${encodeURIComponent(
+            `https://www.messenger.com/t/xyz.63631?text=${encodeURIComponent(
               code
             )}`,
             "_blank"
@@ -106,7 +106,7 @@ export default function PrizePopup({
         }, 600);
       } else {
         window.open(
-          `https://www.messenger.com/t/xyz.63631?ref=${encodeURIComponent(
+          `https://www.messenger.com/t/xyz.63631?text=${encodeURIComponent(
             code
           )}`,
           "_blank"
@@ -120,7 +120,9 @@ export default function PrizePopup({
         } catch {}
       }
       window.open(
-        `https://www.messenger.com/t/xyz.63631?ref=${encodeURIComponent(code)}`,
+        `https://www.messenger.com/t/xyz.63631?text=${encodeURIComponent(
+          code
+        )}`,
         "_blank"
       );
     }
