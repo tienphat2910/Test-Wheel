@@ -98,7 +98,7 @@ export default function PrizePopup({
       if (copied) {
         setTimeout(() => {
           window.open(
-            `https://www.messenger.com/t/xyz.63631?text=${encodeURIComponent(
+            `https://www.messenger.com/t/xyz.63631?ref=${encodeURIComponent(
               code
             )}`,
             "_blank"
@@ -106,7 +106,7 @@ export default function PrizePopup({
         }, 600);
       } else {
         window.open(
-          `https://www.messenger.com/t/xyz.63631?text=${encodeURIComponent(
+          `https://www.messenger.com/t/xyz.63631?ref=${encodeURIComponent(
             code
           )}`,
           "_blank"
