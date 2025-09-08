@@ -138,26 +138,11 @@ const ProgramRulesSection = () => (
         className="relative w-full max-w-[391px] aspect-[391/532] mx-auto"
         style={{ maxWidth: "100vw", margin: "0 auto" }}
       >
-        {/* SVG viền ngoài */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 397 520"
-          fill="none"
-          className="w-full h-auto absolute inset-0 z-10 pointer-events-none aspect-[397/520]"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          <path
-            d="M396.2 11.6328C392.018 11.6328 388.672 6.9274 388.672 1.04564V4.36687e-07L8.2709 0V1.04564C8.2709 6.92739 4.92538 11.6328 0.743463 11.6328H9.77516e-06L0 508.367H0.743451C4.92537 508.367 8.2709 513.073 8.2709 518.954V520H388.672V518.954C388.672 513.073 392.018 508.367 396.2 508.367H396.943L396.943 11.6328H396.2ZM395.549 506.407C391.182 506.929 387.65 511.766 387.371 517.909H9.57194C9.29314 511.766 5.76175 506.929 1.39397 506.407L1.39398 13.4627C5.76176 13.0706 9.29314 8.10375 9.57194 1.96058L387.278 1.96058C387.65 8.10375 391.089 13.0706 395.456 13.4627L395.456 506.407H395.549Z"
-            fill="#FFF3E2"
-          />
-        </svg>
-
-        {/* SVG nền bên trong */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 391 560"
           fill="none"
-          className="w-full h-auto absolute top-0 left-0 z-0"
+          className="w-full h-auto relative z-0"
         >
           <path
             d="M381.771 1.20538C382.832 6.81091 385.995 11.2016 390.005 12.8782V498.856C385.987 500.41 382.83 504.807 381.771 510.403H9.17188C8.11589 504.942 5.05159 500.414 0.938477 498.855V12.7513C4.95582 11.1969 8.11293 6.80075 9.17188 1.20538H381.771Z"
@@ -177,74 +162,80 @@ const ProgramRulesSection = () => (
               <stop offset="1" stopColor="#CF3A05" />
             </linearGradient>
           </defs>
+
+          <foreignObject x="0" y="0" width="391" height="560">
+            <div
+              className="flex flex-col p-4 gap-6 h-full"
+              style={{ color: "#FFF3E2" }}
+            >
+              {/* Thể lệ */}
+              <div className="text-center mx-auto max-w-[95%]">
+                <h3
+                  className="font-voltra text-[#FFD8A7]"
+                  style={{
+                    fontSize: "18px",
+                    lineHeight: 1.3,
+                    letterSpacing: "-0.8px"
+                  }}
+                >
+                  Thể lệ chương trình
+                </h3>
+                <p
+                  className="mt-2 kelson text-left"
+                  style={{
+                    fontSize: "16px",
+                    lineHeight: 1.8,
+                    whiteSpace: "pre-line",
+                    wordBreak: "break-word",
+                    overflowWrap: "anywhere",
+                    hyphens: "auto"
+                  }}
+                >
+                  • Gọi món “Vòng Xoay Bò Đặc Biệt” tại nhà hàng và quét QR trên
+                  tag để tham gia.
+                  {"\n"}• Vòng xoay hiển thị kết quả trúng 01 trong 05 phần bò
+                  tinh tuyển: Dẻ Sườn, Bắp Hoa, Thịt Vai Bò, Diềm Thăn Bò, Thăn
+                  Đầu Rồng.
+                  {"\n"}• Nhấn “Nhận ngay”, sau đó bấm “Gửi” trong Messenger để
+                  nhận thông tin phần quà tương ứng cùng hướng dẫn sử dụng ưu
+                  đãi.
+                </p>
+              </div>
+
+              {/* Điều khoản */}
+              <div className="text-center mx-auto max-w-[95%]">
+                <h3
+                  className="font-voltra text-[#FFD8A7]"
+                  style={{
+                    fontSize: "18px",
+                    lineHeight: 1.3,
+                    letterSpacing: "-0.8px"
+                  }}
+                >
+                  Điều khoản & điều kiện
+                </h3>
+                <p
+                  className="mt-2 kelson text-left"
+                  style={{
+                    fontSize: "16px",
+                    lineHeight: 1.8,
+                    whiteSpace: "pre-line",
+                    wordBreak: "break-word",
+                    overflowWrap: "anywhere",
+                    hyphens: "auto"
+                  }}
+                >
+                  • Áp dụng cho hóa đơn từ 500.000đ.
+                  {"\n"}• Đặt bàn trước qua fanpage để sử dụng mã.
+                  {"\n"}• Không áp dụng cùng Combo, Lễ Tết và các chương trình
+                  khuyến mãi khác.
+                  {"\n"}• Quà tặng không có giá trị quy đổi thành tiền mặt, áp
+                  dụng tối đa 01 phần/hóa đơn.
+                </p>
+              </div>
+            </div>
+          </foreignObject>
         </svg>
-
-        {/* Nội dung mobile */}
-        <div className="absolute inset-0 z-20 flex flex-col p-4 gap-6">
-          {/* Thể lệ */}
-          <div className="text-center mx-auto max-w-[95%]">
-            <h3
-              className="font-voltra text-[#FFD8A7]"
-              style={{
-                fontSize: "clamp(12px, 2.5vw, 16px)",
-                lineHeight: "1.3",
-                letterSpacing: "-0.8px"
-              }}
-            >
-              Thể lệ chương trình
-            </h3>
-            <p
-              className="mt-2 kelson text-[#FFF3E2] text-left"
-              style={{
-                fontSize: "clamp(12px, 3.5vw, 16px)",
-                lineHeight: "1.8",
-                whiteSpace: "pre-line",
-                wordBreak: "break-word",
-                overflowWrap: "anywhere",
-                hyphens: "auto"
-              }}
-            >
-              • Gọi món “Vòng Xoay Bò Đặc Biệt” tại nhà hàng và quét QR trên tag
-              để tham gia.
-              {"\n"}• Vòng xoay hiển thị kết quả trúng 01 trong 05 phần bò tinh
-              tuyển: Dẻ Sườn, Bắp Hoa, Thịt Vai Bò, Diềm Thăn Bò, Thăn Đầu Rồng.
-              {"\n"}• Nhấn “Nhận ngay”, sau đó bấm “Gửi” trong Messenger để nhận
-              thông tin phần quà tương ứng cùng hướng dẫn sử dụng ưu đãi.
-            </p>
-          </div>
-
-          {/* Điều khoản */}
-          <div className="text-center mx-auto max-w-[95%]">
-            <h3
-              className="font-voltra text-[#FFD8A7]"
-              style={{
-                fontSize: "clamp(14px, 2.5vw, 16px)",
-                lineHeight: "1.3",
-                letterSpacing: "-0.8px"
-              }}
-            >
-              Điều khoản & điều kiện
-            </h3>
-            <p
-              className="mt-2 kelson text-[#FFF3E2] text-left"
-              style={{
-                fontSize: "clamp(10px, 3.5vw, 16px)",
-                lineHeight: "1.8",
-                whiteSpace: "pre-line",
-                wordBreak: "break-word",
-                overflowWrap: "anywhere",
-                hyphens: "auto"
-              }}
-            >
-              • Áp dụng cho hóa đơn từ 500.000đ.
-              {"\n"}• Đặt bàn trước qua fanpage để sử dụng mã.
-              {"\n"}• Không áp dụng cùng Combo, Lễ Tết và các chương trình
-              khuyến mãi khác.
-              {"\n"}• Quà tặng không có giá trị quy đổi thành tiền mặt, áp dụng
-              tối đa 01 phần/hóa đơn.
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   </div>
