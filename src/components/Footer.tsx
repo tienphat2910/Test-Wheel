@@ -106,7 +106,7 @@ export default function Footer() {
             </div>
           </div>
           {/* Social icons */}
-          <div className="flex flex-row items-center gap-6 my-4 md:my-0 flex-shrink-0 self-center footer-social-mobile md:justify-center md:self-center">
+          <div className="flex flex-row items-start gap-6 my-4 md:my-0 flex-shrink-0 self-start footer-social-mobile justify-start md:justify-center md:self-center">
             {/* Globe icon */}
             <a
               href="https://tianlong.vn/"

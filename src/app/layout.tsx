@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tian Long",
+  title: "Tian Long - Vòng xoay bò đặc biệt",
   description: "Lẩu bò tươi Triều Châu"
 };
 
