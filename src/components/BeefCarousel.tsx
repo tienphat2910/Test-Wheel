@@ -132,7 +132,7 @@ export default function BeefCarousel() {
               opacity = 1;
               zIndex = 30;
             } else if (Math.abs(item.offset) === 1) {
-              scale = 0.95;
+              scale = 1;
               opacity = 0.9;
               zIndex = 20;
             } else if (Math.abs(item.offset) === 2) {
@@ -146,7 +146,7 @@ export default function BeefCarousel() {
                 <motion.div
                   key={`center-${current}`}
                   className={
-                    "flex-shrink-0 w-[230px] md:w-[300px] lg:w-[360px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-visible"
+                    "flex-shrink-0 w-[280px] md:w-[300px] lg:w-[390px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-visible"
                   }
                   style={{ zIndex }}
                   initial={{
