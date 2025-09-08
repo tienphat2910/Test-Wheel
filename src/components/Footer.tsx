@@ -236,7 +236,7 @@ export default function Footer() {
                     "_blank"
                   )
                 }
-                className="flex items-center justify-center"
+                className="flex items-center justify-center cursor-pointer"
                 style={{
                   width: 90,
                   height: 24,
@@ -280,7 +280,15 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="w-full text-center text-[14px] text-white mt-8 kelson">
-          Copyright © TIAN LONG. All Rights Reserved. Designed by Braney
+          Copyright © TIAN LONG. All Rights Reserved. Designed by{" "}
+          <a
+            href="https://braney.vn"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline-none hover:text-yellow-400"
+          >
+            Braney
+          </a>
         </div>
       </div>
     </footer>
