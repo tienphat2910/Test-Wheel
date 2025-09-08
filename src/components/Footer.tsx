@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -51,16 +52,15 @@ export default function Footer() {
       <div className="max-w-5xl mx-auto flex flex-col items-center">
         {/* Logo */}
         <div className="flex flex-col items-center">
-          <img
+          <Image
             src="/assets/logo-tianlong.png"
             alt="Tian Long Logo"
+            width={136}
+            height={69}
             className="mb-2"
             style={{
-              width: "136px",
-              height: "69px",
-              flexShrink: 0,
-              aspectRatio: "136/69",
-              objectFit: "contain"
+              objectFit: "cover",
+              aspectRatio: "136/69"
             }}
           />
         </div>
@@ -165,10 +165,12 @@ export default function Footer() {
           </div>
           {/* Fanpage card custom với Follow & Share */}
           <div className="flex-shrink-0 relative w-[370px] h-[182px] rounded-lg overflow-hidden shadow-lg border border-[#FFF3E2] footer-fanpage-mobile md:justify-start">
-            <img
+            <Image
               src="/assets/fanpage-card.png"
               alt="Fanpage"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-center"
+              width={370}
+              height={182}
             />
 
             {/* Overlay: nút theo dõi và chia sẻ */}

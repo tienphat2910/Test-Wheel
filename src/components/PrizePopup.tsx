@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-
+import Image from "next/image";
 export type PrizeData = {
   option: string;
   price: number;
@@ -208,9 +208,11 @@ export default function PrizePopup({
           </div>
           {/* Image full width container, giữ height */}
           <div className="w-full flex justify-center overflow-hidden">
-            <img
+            <Image
               src={data.image}
               alt={data.option}
+              width={398}
+              height={210}
               className="w-full h-[200px] md:h-[210px] object-cover"
               style={{ background: "#fff" }}
             />

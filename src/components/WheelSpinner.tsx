@@ -73,8 +73,7 @@ export default function WheelSpinner({
       <div className="relative">
         {/* Wheel - responsive and constrained for small screens */}
         <div
-          className="
-flex-shrink-0
+          className="flex-shrink-0
             md:w-[360px] md:h-auto
             /* Mobile custom size */
             block md:hidden w-[120vw] h-[120vw]

@@ -6,6 +6,7 @@ import BeefCarousel from "@components/BeefCarousel";
 import LocationList from "@components/LocationList";
 import Footer from "@/components/Footer";
 import PrizePopup, { PrizeData } from "@components/PrizePopup";
+import Image from "next/image";
 
 export default function Home() {
   const [prizeResult, setPrizeResult] = useState<{
@@ -45,9 +46,11 @@ export default function Home() {
           >
             {/* Logo gần text, không sát phải */}
             <div className="absolute top-[12%] right-[19%] z-20">
-              <img
+              <Image
                 src="/assets/logo-tianlong.png"
                 alt="Tianlong Logo"
+                width={200}
+                height={100}
                 className="w-[20%] h-[14%] min-w-[125px] min-h-[60px] aspect-[79/40] flex-shrink-0"
                 style={{ opacity: 1, filter: "none" }}
               />
@@ -65,26 +68,32 @@ export default function Home() {
         <div className="block md:hidden w-full bg-black relative h-full">
           <div className="relative w-full min-h-screen mx-auto bg-black">
             {/* Background banner */}
-            <img
+            <Image
               src="/assets/banner.png"
               alt="Banner Mobile"
+              width={600}
+              height={400}
               className="w-full h-auto object-cover object-no-repeat absolute inset-0"
             />
 
             {/* Overlay content */}
             <div className="relative z-20 flex flex-col items-center w-full h-full gap-4">
               {/* Logo */}
-              <img
+              <Image
                 src="/assets/logo-tianlong.png"
                 alt="Tianlong Logo"
+                width={90}
+                height={60}
                 className="w-[21%] h-auto min-w-[70px] max-w-[90px] mt-15"
                 style={{ opacity: 1, filter: "none" }}
               />
               {/* Text */}
-              <img
+              <Image
                 src="/assets/text-xoay-bo-dung-gu.png"
                 alt="Xoay bò đúng gu"
-                className="w-full max-w-[300px] h-auto mb-4" // thêm margin bottom
+                width={300}
+                height={80}
+                className="w-full max-w-[300px] h-auto mb-4"
               />
               {/* WheelSpinner */}
               <div className="w-full flex justify-center pt-50 mt-15 pb-0 mb-0">

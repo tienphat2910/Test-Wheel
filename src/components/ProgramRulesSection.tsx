@@ -54,8 +54,8 @@ const ProgramRulesSection = () => (
             y2="537.891"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stop-color="#8F1713" />
-            <stop offset="1" stop-color="#CF3A05" />
+            <stop stopColor="#8F1713" />
+            <stop offset="1" stopColor="#CF3A05" />
           </linearGradient>
         </defs>
       </svg>

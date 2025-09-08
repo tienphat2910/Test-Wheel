@@ -2,6 +2,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import beefData from "@/data/beefData";
+import Image from "next/image";
 
 export default function BeefCarousel() {
   const [current, setCurrent] = useState(0);
@@ -167,9 +168,11 @@ export default function BeefCarousel() {
                     transition: { duration: 0.3 }
                   }}
                 >
-                  <img
+                  <Image
                     src={item.image}
                     alt={item.title[0]}
+                    width={390}
+                    height={280}
                     className="w-full h-[180px] md:h-[240px] lg:h-[280px] object-cover rounded-[20px] mb-4"
                   />
                   <h3 className="text-lg md:text-2xl font-bold text-left text-black leading-snug utm-centur">
@@ -196,9 +199,11 @@ export default function BeefCarousel() {
                   }
                   style={{ zIndex, transform: `scale(${scale})`, opacity }}
                 >
-                  <img
+                  <Image
                     src={item.image}
                     alt={item.title[0]}
+                    width={360}
+                    height={280}
                     className="w-full h-[180px] md:h-[240px] lg:h-[280px] object-cover rounded-[20px] mb-4"
                   />
                   <h3 className="text-lg md:text-2xl font-bold text-left text-black leading-snug utm-centur">
