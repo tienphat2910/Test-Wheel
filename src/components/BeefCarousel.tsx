@@ -1,25 +1,67 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import beefData from "@/data/beefData";
 
 export default function BeefCarousel() {
   const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(0); // 1: next, -1: prev
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const prevSlide = () => {
+    setDirection(-1);
     setCurrent((prev) => (prev - 1 + beefData.length) % beefData.length);
   };
 
   const nextSlide = () => {
+    setDirection(1);
     setCurrent((prev) => (prev + 1) % beefData.length);
   };
 
+  // Luôn hiển thị 5 item, item giữa lớn nhất, 2 bên nhỏ dần
   const getSlides = () => {
     const total = beefData.length;
     return [-2, -1, 0, 1, 2].map((offset) => {
       const index = (current + offset + total) % total;
       return { ...beefData[index], offset };
     });
+  };
+
+  // Scroll item giữa về giữa container
+  useEffect(() => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const cardWidth = 260; // bằng w-[260px]
+    const gap = 40; // bằng mr-[40px]
+    const containerWidth = container.offsetWidth;
+    // Item giữa là index 2 trong getSlides()
+    const centerIdx = 2;
+    // Chỉ scrollTo khi mount hoặc resize, không scroll khi current thay đổi
+    // container.scrollTo({ left: scrollLeft, behavior: "smooth" });
+  }, []);
+
+  // Animation variants for framer-motion
+  const variants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 300 : -300,
+      opacity: 0,
+      scale: 0.75,
+      zIndex: 10
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1.1,
+      zIndex: 30,
+      transition: { duration: 0.5, type: "spring" as const }
+    },
+    exit: (direction: number) => ({
+      x: direction < 0 ? 300 : -300,
+      opacity: 0,
+      scale: 0.75,
+      zIndex: 10,
+      transition: { duration: 0.3 }
+    })
   };
 
   return (
@@ -49,23 +91,25 @@ export default function BeefCarousel() {
       >
         {/* Slide wrapper */}
         <div
+          ref={scrollContainerRef}
           className="
             flex justify-center items-center
             w-full
-            overflow-hidden
+            overflow-x-hidden scrollbar-none gap-[40px] px-2
           "
           style={{
             minHeight: "100%",
             paddingTop: "40px",
-            paddingBottom: "40px"
+            paddingBottom: "40px",
+            scrollBehavior: "smooth"
           }}
         >
+          <style>{`.scrollbar-none::-webkit-scrollbar { display: none; }`}</style>
           {getSlides().map((item, idx) => {
             // Tính toán scale và opacity dựa trên offset
             let scale = 0.75;
             let opacity = 0.5;
             let zIndex = 10;
-
             if (item.offset === 0) {
               scale = 1.1;
               opacity = 1;
@@ -79,51 +123,82 @@ export default function BeefCarousel() {
               opacity = 0.6;
               zIndex = 15;
             }
-
-            // Chỉ margin phải cho các slide trừ slide cuối cùng
-            let margin = "";
-            if (idx !== getSlides().length - 1) margin = "mr-[40px]";
-
-            return (
-              <motion.div
-                key={`${current}-${item.offset}`}
-                animate={{
-                  scale: scale,
-                  opacity: opacity
-                }}
-                transition={{
-                  duration: 0.3,
-                  ease: "easeInOut"
-                }}
-                className={`
-                  flex-shrink-0 w-[260px] md:w-[360px] lg:w-[420px]
-                  h-[420px] md:h-[420px] lg:h-[580px]
-                  bg-white rounded-[30px] border-2 border-[#FFF3E2]
-                  shadow-lg p-4 md:p-6 flex flex-col items-start
-                  ${margin}
-                  overflow-visible
-                `}
-                style={{ zIndex }}
-              >
-                <img
-                  src={item.image}
-                  alt={item.title[0]}
-                  className="w-full h-[180px] md:h-[240px] lg:h-[280px] object-cover rounded-[20px] mb-4"
-                />
-                <h3 className="text-lg md:text-2xl font-bold text-left text-black leading-snug utm-centur">
-                  {item.title[0]} <br />
-                  <span className="font-semibold">{item.title[1]}</span>
-                </h3>
-                {item.description.map((desc, i) => (
-                  <p
-                    key={i}
-                    className="text-sm md:text-lg text-black text-left mt-2 leading-relaxed kelson"
-                  >
-                    {desc}
-                  </p>
-                ))}
-              </motion.div>
-            );
+            if (item.offset === 0) {
+              // Chỉ animate cho item giữa
+              return (
+                <motion.div
+                  key={`center-${current}`}
+                  className={
+                    "flex-shrink-0 w-[260px] md:w-[360px] lg:w-[420px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-visible"
+                  }
+                  style={{ zIndex }}
+                  initial={{
+                    x: direction > 0 ? 300 : -300,
+                    opacity: 0,
+                    scale: 0.75
+                  }}
+                  animate={{
+                    x: 0,
+                    opacity: 1,
+                    scale: 1.1,
+                    transition: { type: "spring", stiffness: 300, damping: 30 }
+                  }}
+                  exit={{
+                    x: direction < 0 ? 300 : -300,
+                    opacity: 0,
+                    scale: 0.75,
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title[0]}
+                    className="w-full h-[180px] md:h-[240px] lg:h-[280px] object-cover rounded-[20px] mb-4"
+                  />
+                  <h3 className="text-lg md:text-2xl font-bold text-left text-black leading-snug utm-centur">
+                    {item.title[0]} <br />
+                    <span className="font-semibold">{item.title[1]}</span>
+                  </h3>
+                  {item.description.map((desc, i) => (
+                    <p
+                      key={i}
+                      className="text-sm md:text-lg text-black text-left mt-2 leading-relaxed kelson"
+                    >
+                      {desc}
+                    </p>
+                  ))}
+                </motion.div>
+              );
+            } else {
+              // Các item bên cạnh không animate, chỉ scale/opacity
+              return (
+                <div
+                  key={`side-${item.title[0]}-${item.offset}`}
+                  className={
+                    "flex-shrink-0 w-[260px] md:w-[360px] lg:w-[420px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-visible"
+                  }
+                  style={{ zIndex, transform: `scale(${scale})`, opacity }}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title[0]}
+                    className="w-full h-[180px] md:h-[240px] lg:h-[280px] object-cover rounded-[20px] mb-4"
+                  />
+                  <h3 className="text-lg md:text-2xl font-bold text-left text-black leading-snug utm-centur">
+                    {item.title[0]} <br />
+                    <span className="font-semibold">{item.title[1]}</span>
+                  </h3>
+                  {item.description.map((desc, i) => (
+                    <p
+                      key={i}
+                      className="text-sm md:text-lg text-black text-left mt-2 leading-relaxed kelson"
+                    >
+                      {desc}
+                    </p>
+                  ))}
+                </div>
+              );
+            }
           })}
         </div>
         {/* Navigation */}
@@ -135,23 +210,12 @@ export default function BeefCarousel() {
           }}
         >
           {/* Nút trái */}
-          <motion.div
-            className="w-[48px] h-[48px] md:w-[60px] md:h-[60px]"
-            style={{
-              flexShrink: 0,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.15 }}
-          >
+          <div className="w-[48px] h-[48px] md:w-[60px] md:h-[60px] flex justify-center items-center">
             <button onClick={prevSlide}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 60 60"
-                className="w-[48px] h-[48px] md:w-[60px] md:h-[60px]"
+                className="w-[48px] h-[48px] md:w-[60px] md:h-[60px] cursor-pointer"
                 fill="none"
               >
                 <circle
@@ -180,27 +244,16 @@ export default function BeefCarousel() {
                 />
               </svg>
             </button>
-          </motion.div>
+          </div>
 
           {/* Nút phải */}
-          <motion.div
-            className="w-[48px] h-[48px] md:w-[60px] md:h-[60px]"
-            style={{
-              flexShrink: 0,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.15 }}
-          >
+          <div className="w-[48px] h-[48px] md:w-[60px] md:h-[60px] flex justify-center items-center">
             <button onClick={nextSlide}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 60 60"
                 fill="none"
-                className="w-[48px] h-[48px] md:w-[60px] md:h-[60px]"
+                className="w-[48px] h-[48px] md:w-[60px] md:h-[60px] cursor-pointer"
               >
                 <circle
                   cx="30"
@@ -229,7 +282,7 @@ export default function BeefCarousel() {
                 />
               </svg>
             </button>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>
