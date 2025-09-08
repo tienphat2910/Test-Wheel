@@ -74,10 +74,10 @@ export default function WheelSpinner({
         {/* Wheel - responsive and constrained for small screens */}
         <div
           className="
-            h-auto flex-shrink-0
+flex-shrink-0
             md:w-[360px] md:h-auto
             /* Mobile custom size */
-            block md:hidden w-[90vw] max-w-[506px]
+            block md:hidden w-[120vw] h-[120vw]
           "
           style={{
             transform: `rotate(${rotation}deg)`,
@@ -89,9 +89,9 @@ export default function WheelSpinner({
           <Image
             src="/assets/wheel.png"
             alt="Spinning Wheel"
-            width={807}
+            width={1000}
             height={810}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
             priority
           />
         </div>

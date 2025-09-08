@@ -1,12 +1,19 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import beefData from "@/data/beefData";
 
 export default function BeefCarousel() {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0); // 1: next, -1: prev
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMobile(window.innerWidth < 768);
+    }
+  }, []);
 
   const prevSlide = () => {
     setDirection(-1);
@@ -68,11 +75,12 @@ export default function BeefCarousel() {
     <div
       className="
         relative flex flex-col items-center
-        px-2 md:px-0
+        md:px-0
+        overflow-hidden
       "
       style={{
         width: "100%",
-        maxWidth: "2206px",
+        maxWidth: "2226px",
         height: "auto",
         minHeight: "0"
       }}
@@ -80,28 +88,37 @@ export default function BeefCarousel() {
       <div
         className="
           w-full flex flex-col items-center
-          md:w-[2206px] md:h-auto md:flex-shrink-0
+          md:w-[2226px] md:h-auto md:flex-shrink-0
         "
         style={{
           width: "100%",
-          maxWidth: "100vw",
+          maxWidth: "120vw",
           height: "auto",
           minHeight: "0"
         }}
       >
         {/* Slide wrapper */}
-        <div
+        <motion.div
           ref={scrollContainerRef}
           className="
             flex justify-center items-center
             w-full
-            overflow-x-hidden scrollbar-none gap-[40px] px-2
+            overflow-x-visible scrollbar-none gap-[24px] md:gap-[40px]
+            touch-pan-x
+            pl-8 pr-8 md:pl-24 md:pr-24
           "
           style={{
             minHeight: "100%",
             paddingTop: "40px",
             paddingBottom: "40px",
             scrollBehavior: "smooth"
+          }}
+          drag={isMobile ? "x" : false}
+          dragConstraints={{ left: 0, right: 0 }}
+          onDragEnd={(e, info) => {
+            if (!isMobile) return;
+            if (info.offset.x < -80) nextSlide();
+            else if (info.offset.x > 80) prevSlide();
           }}
         >
           <style>{`.scrollbar-none::-webkit-scrollbar { display: none; }`}</style>
@@ -129,7 +146,7 @@ export default function BeefCarousel() {
                 <motion.div
                   key={`center-${current}`}
                   className={
-                    "flex-shrink-0 w-[260px] md:w-[360px] lg:w-[420px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-visible"
+                    "flex-shrink-0 w-[230px] md:w-[300px] lg:w-[360px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-visible"
                   }
                   style={{ zIndex }}
                   initial={{
@@ -175,7 +192,7 @@ export default function BeefCarousel() {
                 <div
                   key={`side-${item.title[0]}-${item.offset}`}
                   className={
-                    "flex-shrink-0 w-[260px] md:w-[360px] lg:w-[420px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-visible"
+                    "flex-shrink-0 w-[220px] md:w-[300px] lg:w-[360px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-visible"
                   }
                   style={{ zIndex, transform: `scale(${scale})`, opacity }}
                 >
@@ -200,7 +217,7 @@ export default function BeefCarousel() {
               );
             }
           })}
-        </div>
+        </motion.div>
         {/* Navigation */}
         <div
           className="mt-10 flex justify-center items-center gap-4"

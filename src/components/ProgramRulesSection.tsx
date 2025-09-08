@@ -134,7 +134,10 @@ const ProgramRulesSection = () => (
     {/* Mobile */}
     <div className="block md:hidden relative w-full h-auto flex-shrink-0 mx-auto overflow-hidden">
       {/* Container giới hạn max-width để text không tràn */}
-      <div className="relative w-full max-w-[391px] aspect-[391/532] mx-auto">
+      <div
+        className="relative w-full max-w-[391px] aspect-[391/532] mx-auto"
+        style={{ maxWidth: "100vw", margin: "0 auto" }}
+      >
         {/* SVG viền ngoài */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +155,7 @@ const ProgramRulesSection = () => (
         {/* SVG nền bên trong */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 391 520"
+          viewBox="0 0 391 560"
           fill="none"
           className="w-full h-auto absolute top-0 left-0 z-0"
         >
@@ -183,7 +186,7 @@ const ProgramRulesSection = () => (
             <h3
               className="font-voltra text-[#FFD8A7]"
               style={{
-                fontSize: "clamp(12px, 3vw, 14px)",
+                fontSize: "clamp(12px, 2.5vw, 16px)",
                 lineHeight: "1.3",
                 letterSpacing: "-0.8px"
               }}
@@ -193,11 +196,12 @@ const ProgramRulesSection = () => (
             <p
               className="mt-2 kelson text-[#FFF3E2] text-left"
               style={{
-                fontSize: "clamp(12px, 3vw, 14px)",
+                fontSize: "clamp(12px, 3.5vw, 16px)",
                 lineHeight: "1.8",
                 whiteSpace: "pre-line",
                 wordBreak: "break-word",
-                overflowWrap: "break-word"
+                overflowWrap: "anywhere",
+                hyphens: "auto"
               }}
             >
               • Gọi món “Vòng Xoay Bò Đặc Biệt” tại nhà hàng và quét QR trên tag
@@ -214,7 +218,7 @@ const ProgramRulesSection = () => (
             <h3
               className="font-voltra text-[#FFD8A7]"
               style={{
-                fontSize: "clamp(12px, 3vw, 14px)",
+                fontSize: "clamp(14px, 2.5vw, 16px)",
                 lineHeight: "1.3",
                 letterSpacing: "-0.8px"
               }}
@@ -224,11 +228,12 @@ const ProgramRulesSection = () => (
             <p
               className="mt-2 kelson text-[#FFF3E2] text-left"
               style={{
-                fontSize: "clamp(11px, 3vw, 13px)",
+                fontSize: "clamp(10px, 3.5vw, 16px)",
                 lineHeight: "1.8",
                 whiteSpace: "pre-line",
                 wordBreak: "break-word",
-                overflowWrap: "break-word"
+                overflowWrap: "anywhere",
+                hyphens: "auto"
               }}
             >
               • Áp dụng cho hóa đơn từ 500.000đ.
