@@ -53,8 +53,8 @@ export default function Home() {
               />
             </div>
             {/* WheelSpinner nằm chồng trên banner */}
-            <div className="absolute top-[16%] left-1/2 -translate-x-1/2 translate-y-[20%] z-30">
-              <div className="max-w-[700px] w-full flex justify-center ">
+            <div className="translate-x-1/2 z-30 w-full flex flex-col mt-120 md:mt-130">
+              <div className="w-full max-w-[100px] px-2 md:px-0">
                 <WheelSpinner onPrizeResult={handlePrizeResult} />
               </div>
             </div>
@@ -62,33 +62,34 @@ export default function Home() {
         </div>
 
         {/* Mobile */}
-        <div className="block md:hidden w-full bg-black">
-          <div className="relative w-full h-[1078px] mx-auto bg-black">
+        <div className="block md:hidden w-full bg-black relative h-full">
+          <div className="relative w-full min-h-screen mx-auto bg-black">
             {/* Background banner */}
             <img
               src="/assets/banner.png"
               alt="Banner Mobile"
-              className="w-full h-full object-cover object-no-repeat absolute inset-0"
+              className="w-full h-auto object-cover object-no-repeat absolute inset-0"
             />
+
             {/* Overlay content */}
-            <div className="relative z-20 flex flex-col items-center w-full h-full pt-[60px] pb-[214px] gap-4">
+            <div className="relative z-20 flex flex-col items-center w-full h-full gap-4">
               {/* Logo */}
               <img
                 src="/assets/logo-tianlong.png"
                 alt="Tianlong Logo"
-                className="w-[21%] h-auto min-w-[70px] max-w-[90px]"
+                className="w-[21%] h-auto min-w-[70px] max-w-[90px] mt-15"
                 style={{ opacity: 1, filter: "none" }}
               />
               {/* Text */}
               <img
                 src="/assets/text-xoay-bo-dung-gu.png"
                 alt="Xoay bò đúng gu"
-                className="w-[85vw] max-w-[300px] h-auto"
+                className="w-full max-w-[300px] h-auto mb-4" // thêm margin bottom
               />
-            </div>
-            {/* WheelSpinner overlay */}
-            <div className="absolute inset-0 flex justify-center items-end z-30 md:pb-[7%]">
-              <WheelSpinner onPrizeResult={handlePrizeResult} />
+              {/* WheelSpinner */}
+              <div className="w-full flex justify-center pt-50 mt-15 pb-0 mb-0">
+                <WheelSpinner onPrizeResult={handlePrizeResult} />
+              </div>
             </div>
           </div>
         </div>
@@ -149,8 +150,8 @@ export default function Home() {
               xoay thành một trải nghiệm vị giác độc bản dành riêng cho Đồng Gu.
             </div>
           </div>
-          <div className="mt-8 md:mt-12 lg:mt-16 w-full flex justify-center">
-            <div className="w-full max-w-[2006px] px-2 md:px-0">
+          <div className="mt-8 md:mt-12 lg:mt-16 w-full flex justify-center max-w-[2206px] ">
+            <div className="w-full max-w-[1980px] max-h-[800px] h-full px-2 md:px-0">
               <BeefCarousel />
             </div>
           </div>

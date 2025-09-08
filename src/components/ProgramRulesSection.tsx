@@ -2,9 +2,9 @@
 import React from "react";
 
 const ProgramRulesSection = () => (
-  <div className="flex justify-center mt-8 overflow-hidden overflow-x-hidden overflow-y-hidden">
+  <div className="flex justify-center mt-4">
     {/* Desktop */}
-    <div className="hidden md:block relative w-[1419px] h-[482px] flex-shrink-0 mx-auto overflow-hidden">
+    <div className="hidden md:block relative w-[1450px] h-[482px] flex-shrink-0 mx-auto overflow-visible">
       {/* SVG viền ngoài */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -12,7 +12,7 @@ const ProgramRulesSection = () => (
         height="482"
         viewBox="0 0 1419 482"
         fill="none"
-        className="absolute inset-0 w-full h-full z-10 pointer-events-none"
+        className="absolute inset-0 left-0 right-0 mx-auto w-full max-w-[1419px] h-[470px] z-0"
       >
         {/* ...SVG viền ngoài desktop... */}
         <mask id="path-1-inside-1_422_1531" fill="white">
@@ -27,12 +27,24 @@ const ProgramRulesSection = () => (
       {/* SVG nền bên trong */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="1408"
+        width="1400"
         height="470"
-        viewBox="0 0 1408 470"
+        viewBox="0 0 1400 470"
         fill="none"
-        className="absolute top-1 left-0 right-0 mx-auto w-[calc(100%-22px)] max-w-[1408px] h-[470px] z-0"
+        className="absolute inset-0 left-0 right-0 mx-auto w-full max-w-[1419px] h-[470px] z-0"
       >
+        <mask id="path-1-inside-1_422_1532" fill="white">
+          <path d="M1391.21 0C1391.47 8.49842 1398.42 15.341 1407.07 15.5938V453.431C1398.26 453.688 1391.2 460.79 1391.2 469.513C1391.2 469.676 1391.2 469.838 1391.21 470H16.8486C16.8535 469.838 16.8574 469.676 16.8574 469.513C16.8574 460.627 9.5321 453.423 0.496094 453.423C0.330175 453.423 0.16473 453.426 0 453.431V15.5938C0.164735 15.5986 0.330171 15.6016 0.496094 15.6016C9.36623 15.6015 16.5865 8.66022 16.8486 0H1391.21Z" />
+        </mask>
+        <path
+          d="M1391.21 0C1391.47 8.49842 1398.42 15.341 1407.07 15.5938V453.431C1398.26 453.688 1391.2 460.79 1391.2 469.513C1391.2 469.676 1391.2 469.838 1391.21 470H16.8486C16.8535 469.838 16.8574 469.676 16.8574 469.513C16.8574 460.627 9.5321 453.423 0.496094 453.423C0.330175 453.423 0.16473 453.426 0 453.431V15.5938C0.164735 15.5986 0.330171 15.6016 0.496094 15.6016C9.36623 15.6015 16.5865 8.66022 16.8486 0H1391.21Z"
+          fill="url(#paint0_linear_422_1532)"
+        />
+        <path
+          d="M1391.21 0L1392.21 -0.0302541L1392.18 -1H1391.21V0ZM1407.07 15.5938H1408.07V14.6226L1407.09 14.5942L1407.07 15.5938ZM1407.07 453.431L1407.09 454.43L1408.07 454.402V453.431H1407.07ZM1391.2 469.513H1390.2V469.513L1391.2 469.513ZM1391.21 470V471H1392.24L1392.21 469.97L1391.21 470ZM16.8486 470L15.8491 469.97L15.8179 471H16.8486V470ZM16.8574 469.513L17.8574 469.513V469.513H16.8574ZM0.496094 453.423L0.4961 452.423H0.496094V453.423ZM0 453.431H-1V454.46L0.0292667 454.43L0 453.431ZM0 15.5938L0.0292675 14.5942L-1 14.564V15.5938H0ZM0.496094 15.6016V16.6016H0.4961L0.496094 15.6016ZM16.8486 0V-1H15.8784L15.8491 -0.0302546L16.8486 0ZM1391.21 0L1390.21 0.0302541C1390.48 9.07198 1397.88 16.3255 1407.04 16.5933L1407.07 15.5938L1407.09 14.5942C1398.97 14.3564 1392.45 7.92487 1392.21 -0.0302541L1391.21 0ZM1407.07 15.5938H1406.07V453.431H1407.07H1408.07V15.5938H1407.07ZM1407.07 453.431L1407.04 452.431C1397.71 452.704 1390.2 460.232 1390.2 469.513H1391.2H1392.2C1392.2 461.347 1398.81 454.673 1407.09 454.43L1407.07 453.431ZM1391.2 469.513L1390.2 469.513C1390.2 469.688 1390.2 469.86 1390.21 470.03L1391.21 470L1392.21 469.97C1392.2 469.816 1392.2 469.664 1392.2 469.513L1391.2 469.513ZM1391.21 470V469H16.8486V470V471H1391.21V470ZM16.8486 470L17.8482 470.03C17.8532 469.865 17.8574 469.691 17.8574 469.513L16.8574 469.513L15.8574 469.513C15.8574 469.661 15.8539 469.811 15.8491 469.97L16.8486 470ZM16.8574 469.513H17.8574C17.8574 460.059 10.0685 452.423 0.4961 452.423L0.496094 453.423L0.496087 454.423C8.99564 454.423 15.8574 461.195 15.8574 469.513H16.8574ZM0.496094 453.423V452.423C0.318293 452.423 0.142832 452.426 -0.0292667 452.431L0 453.431L0.0292667 454.43C0.186629 454.426 0.342057 454.423 0.496094 454.423V453.423ZM0 453.431H1V15.5938H0H-1V453.431H0ZM0 15.5938L-0.0292675 16.5933C0.142836 16.5984 0.318289 16.6016 0.496094 16.6016V15.6016V14.6016C0.342053 14.6016 0.186633 14.5988 0.0292675 14.5942L0 15.5938ZM0.496094 15.6016L0.4961 16.6016C9.8933 16.6015 17.5693 9.24406 17.8482 0.0302546L16.8486 0L15.8491 -0.0302546C15.6037 8.07638 8.83915 14.6015 0.496087 14.6016L0.496094 15.6016ZM16.8486 0V1H1391.21V0V-1H16.8486V0Z"
+          fill="#FFF3E2"
+          mask="url(#path-1-inside-1_422_1532)"
+        />
         <defs>
           <linearGradient
             id="paint0_linear_422_1532"
@@ -42,21 +54,10 @@ const ProgramRulesSection = () => (
             y2="537.891"
             gradientUnits="userSpaceOnUse"
           >
-            <stop stopColor="#8F1713" />
-            <stop offset="1" stopColor="#CF3A05" />
+            <stop stop-color="#8F1713" />
+            <stop offset="1" stop-color="#CF3A05" />
           </linearGradient>
         </defs>
-        <mask id="path-1-inside-1_422_1532" fill="white">
-          <path d="M1391.21 0C1391.47 8.49842 1398.42 15.341 1407.07 15.5938V453.431C1398.26 453.688 1391.2 460.79 1391.2 469.513C1391.2 469.676 1391.2 469.838 1391.21 470H16.8486C16.8535 469.838 16.8574 469.676 16.8574 469.513C16.8574 460.627 9.5321 453.423 0.496094 453.423C0.330175 453.423 0.16473 453.426 0 453.431V15.5938C0.164735 15.5986 0.330171 15.6016 0.496094 15.6016C9.36623 15.6015 16.5865 8.66022 16.8486 0H1391.21Z" />
-        </mask>
-        <path
-          d="M1391.21 0C1391.47 8.49842 1398.42 15.341 1407.07 15.5938V453.431C1398.26 453.688 1391.2 460.79 1391.2 469.513C1391.2 469.676 1391.2 469.838 1391.21 470H16.8486C16.8535 469.838 16.8574 469.676 16.8574 469.513C16.8574 460.627 9.5321 453.423 0.496094 453.423C0.330175 453.423 0.16473 453.426 0 453.431V15.5938C0.164735 15.5986 0.330171 15.6016 0.496094 15.6016C9.36623 15.6015 16.5865 8.66022 16.8486 0H1391.21Z"
-          fill="url(#paint0_linear_422_1532)"
-        />
-        <path
-          d="M381.771 1.20538C382.832 6.81091 385.995 11.2016 390.005 12.8782V498.856C385.987 500.41 382.83 504.807 381.771 510.403H9.17188C8.11589 504.942 5.05159 500.414 0.938477 498.855V12.7513C4.95582 11.1969 8.11293 6.80075 9.17188 1.20538H381.771Z"
-          fill="none"
-        />
       </svg>
       {/* Nội dung ở đây */}
       <div className="absolute inset-0 z-20 flex flex-col p-10">
@@ -131,123 +132,112 @@ const ProgramRulesSection = () => (
       </div>
     </div>
     {/* Mobile */}
-    <div className="block md:hidden relative w-full max-w-[397px] min-h-[520px] flex-shrink-0 mx-auto overflow-hidden">
-      {/* SVG viền ngoài */}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="397"
-        height="520"
-        viewBox="0 0 397 520"
-        fill="none"
-        className="absolute inset-0 w-full h-full z-10 pointer-events-none"
-      >
-        <path
-          d="M396.2 11.6328C392.018 11.6328 388.672 6.9274 388.672 1.04564V4.36687e-07L8.2709 0V1.04564C8.2709 6.92739 4.92538 11.6328 0.743463 11.6328H9.77516e-06L0 508.367H0.743451C4.92537 508.367 8.2709 513.073 8.2709 518.954V520H388.672V518.954C388.672 513.073 392.018 508.367 396.2 508.367H396.943L396.943 11.6328H396.2ZM395.549 506.407C391.182 506.929 387.65 511.766 387.371 517.909H9.57194C9.29314 511.766 5.76175 506.929 1.39397 506.407L1.39398 13.4627C5.76176 13.0706 9.29314 8.10375 9.57194 1.96058L387.278 1.96058C387.65 8.10375 391.089 13.0706 395.456 13.4627L395.456 506.407H395.549Z"
-          fill="#FFF3E2"
-        />
-      </svg>
-      {/* SVG nền bên trong */}
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="391"
-        height="511"
-        viewBox="0 0 391 511"
-        fill="none"
-        className="absolute top-1 left-1 w-full h-[511px] z-0"
-      >
-        <path
-          d="M381.771 1.20538C382.832 6.81091 385.995 11.2016 390.005 12.8782V498.856C385.987 500.41 382.83 504.807 381.771 510.403H9.17188C8.11589 504.942 5.05159 500.414 0.938477 498.855V12.7513C4.95582 11.1969 8.11293 6.80075 9.17188 1.20538H381.771Z"
-          fill="url(#paint0_linear_619_148)"
-          stroke="#FFF3E2"
-        />
-        <defs>
-          <linearGradient
-            id="paint0_linear_619_148"
-            x1="196"
-            y1="0.705383"
-            x2="196"
-            y2="584.6"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#8F1713" />
-            <stop offset="1" stopColor="#CF3A05" />
-          </linearGradient>
-        </defs>
-      </svg>
-      {/* Nội dung mobile */}
-      <div className="absolute inset-0 z-20 flex flex-col p-4 gap-6">
-        {/* Thể lệ */}
-        <div>
-          <div
-            className="flex w-full max-w-[95%] mx-auto flex-col justify-center items-center text-center font-voltra px-2"
-            style={{
-              color: "#FFD8A7",
-              fontSize: "clamp(14px, 4vw, 16px)",
-              fontWeight: 400,
-              lineHeight: "1.3",
-              letterSpacing: "-0.8px",
-              wordBreak: "break-word",
-              overflowWrap: "break-word",
-              height: "auto",
-              minHeight: "26px"
-            }}
-          >
-            Thể lệ chương trình
+    <div className="block md:hidden relative w-full h-auto flex-shrink-0 mx-auto overflow-hidden">
+      {/* Container giới hạn max-width để text không tràn */}
+      <div className="relative w-full max-w-[391px] aspect-[391/532] mx-auto">
+        {/* SVG viền ngoài */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 397 520"
+          fill="none"
+          className="w-full h-auto absolute inset-0 z-10 pointer-events-none aspect-[397/520]"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <path
+            d="M396.2 11.6328C392.018 11.6328 388.672 6.9274 388.672 1.04564V4.36687e-07L8.2709 0V1.04564C8.2709 6.92739 4.92538 11.6328 0.743463 11.6328H9.77516e-06L0 508.367H0.743451C4.92537 508.367 8.2709 513.073 8.2709 518.954V520H388.672V518.954C388.672 513.073 392.018 508.367 396.2 508.367H396.943L396.943 11.6328H396.2ZM395.549 506.407C391.182 506.929 387.65 511.766 387.371 517.909H9.57194C9.29314 511.766 5.76175 506.929 1.39397 506.407L1.39398 13.4627C5.76176 13.0706 9.29314 8.10375 9.57194 1.96058L387.278 1.96058C387.65 8.10375 391.089 13.0706 395.456 13.4627L395.456 506.407H395.549Z"
+            fill="#FFF3E2"
+          />
+        </svg>
+
+        {/* SVG nền bên trong */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 391 520"
+          fill="none"
+          className="w-full h-auto absolute top-0 left-0 z-0"
+        >
+          <path
+            d="M381.771 1.20538C382.832 6.81091 385.995 11.2016 390.005 12.8782V498.856C385.987 500.41 382.83 504.807 381.771 510.403H9.17188C8.11589 504.942 5.05159 500.414 0.938477 498.855V12.7513C4.95582 11.1969 8.11293 6.80075 9.17188 1.20538H381.771Z"
+            fill="url(#paint0_linear_619_148)"
+            stroke="#FFF3E2"
+          />
+          <defs>
+            <linearGradient
+              id="paint0_linear_619_148"
+              x1="196"
+              y1="0.705383"
+              x2="196"
+              y2="584.6"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#8F1713" />
+              <stop offset="1" stopColor="#CF3A05" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        {/* Nội dung mobile */}
+        <div className="absolute inset-0 z-20 flex flex-col p-4 gap-6">
+          {/* Thể lệ */}
+          <div className="text-center mx-auto max-w-[95%]">
+            <h3
+              className="font-voltra text-[#FFD8A7]"
+              style={{
+                fontSize: "clamp(12px, 3vw, 14px)",
+                lineHeight: "1.3",
+                letterSpacing: "-0.8px"
+              }}
+            >
+              Thể lệ chương trình
+            </h3>
+            <p
+              className="mt-2 kelson text-[#FFF3E2] text-left"
+              style={{
+                fontSize: "clamp(12px, 3vw, 14px)",
+                lineHeight: "1.8",
+                whiteSpace: "pre-line",
+                wordBreak: "break-word",
+                overflowWrap: "break-word"
+              }}
+            >
+              • Gọi món “Vòng Xoay Bò Đặc Biệt” tại nhà hàng và quét QR trên tag
+              để tham gia.
+              {"\n"}• Vòng xoay hiển thị kết quả trúng 01 trong 05 phần bò tinh
+              tuyển: Dẻ Sườn, Bắp Hoa, Thịt Vai Bò, Diềm Thăn Bò, Thăn Đầu Rồng.
+              {"\n"}• Nhấn “Nhận ngay”, sau đó bấm “Gửi” trong Messenger để nhận
+              thông tin phần quà tương ứng cùng hướng dẫn sử dụng ưu đãi.
+            </p>
           </div>
 
-          <div
-            className="mt-2 self-stretch kelson"
-            style={{
-              color: "#FFF3E2",
-              fontSize: "16px",
-              fontWeight: 400,
-              lineHeight: "26px",
-              whiteSpace: "pre-line"
-            }}
-          >
-            • Gọi món “Vòng Xoay Bò Đặc Biệt” tại nhà hàng và quét QR trên tag
-            để tham gia.
-            {"\n"}• Vòng xoay hiển thị kết quả trúng 01 trong 05 phần bò tinh
-            tuyển: Dẻ Sườn, Bắp Hoa, Thịt Vai Bò, Diềm Thăn Bò, Thăn Đầu Rồng.
-            {"\n"}• Nhấn “Nhận ngay”, sau đó bấm “Gửi” trong Messenger để nhận
-            thông tin phần quà tương ứng cùng hướng dẫn sử dụng ưu đãi.
-          </div>
-        </div>
-
-        {/* Điều khoản */}
-        <div>
-          <div
-            className="flex w-full max-w-[95%] mx-auto flex-col justify-center items-center text-center font-voltra px-2"
-            style={{
-              color: "#FFD8A7",
-              fontSize: "clamp(14px, 4vw, 16px)",
-              fontWeight: 400,
-              lineHeight: "1.3",
-              letterSpacing: "-0.8px",
-              wordBreak: "break-word",
-              overflowWrap: "break-word",
-              height: "auto",
-              minHeight: "26px"
-            }}
-          >
-            Điều khoản & điều kiện
-          </div>
-          <div
-            className="mt-2 self-stretch kelson"
-            style={{
-              color: "#FFF3E2",
-              fontSize: "16px",
-              fontWeight: 400,
-              lineHeight: "26px",
-              whiteSpace: "pre-line"
-            }}
-          >
-            • Áp dụng cho hóa đơn từ 500.000đ.
-            {"\n"}• Đặt bàn trước qua fanpage để sử dụng mã.
-            {"\n"}• Không áp dụng cùng Combo, Lễ Tết và các chương trình khuyến
-            mãi khác.
-            {"\n"}• Quà tặng không có giá trị quy đổi thành tiền mặt, áp dụng
-            tối đa 01 phần/hóa đơn.
+          {/* Điều khoản */}
+          <div className="text-center mx-auto max-w-[95%]">
+            <h3
+              className="font-voltra text-[#FFD8A7]"
+              style={{
+                fontSize: "clamp(12px, 3vw, 14px)",
+                lineHeight: "1.3",
+                letterSpacing: "-0.8px"
+              }}
+            >
+              Điều khoản & điều kiện
+            </h3>
+            <p
+              className="mt-2 kelson text-[#FFF3E2] text-left"
+              style={{
+                fontSize: "clamp(11px, 3vw, 13px)",
+                lineHeight: "1.8",
+                whiteSpace: "pre-line",
+                wordBreak: "break-word",
+                overflowWrap: "break-word"
+              }}
+            >
+              • Áp dụng cho hóa đơn từ 500.000đ.
+              {"\n"}• Đặt bàn trước qua fanpage để sử dụng mã.
+              {"\n"}• Không áp dụng cùng Combo, Lễ Tết và các chương trình
+              khuyến mãi khác.
+              {"\n"}• Quà tặng không có giá trị quy đổi thành tiền mặt, áp dụng
+              tối đa 01 phần/hóa đơn.
+            </p>
           </div>
         </div>
       </div>

@@ -27,11 +27,10 @@ export default function BeefCarousel() {
       className="
         relative flex flex-col items-center
         px-2 md:px-0
-        pt-8 md:pt-10
       "
       style={{
         width: "100%",
-        maxWidth: "2006px",
+        maxWidth: "2206px",
         height: "auto",
         minHeight: "0"
       }}
@@ -39,7 +38,7 @@ export default function BeefCarousel() {
       <div
         className="
           w-full flex flex-col items-center
-          md:w-[2006px] md:h-auto md:flex-shrink-0
+          md:w-[2206px] md:h-auto md:flex-shrink-0
         "
         style={{
           width: "100%",
@@ -57,8 +56,8 @@ export default function BeefCarousel() {
           "
           style={{
             minHeight: "100%",
-            paddingTop: "16px",
-            paddingBottom: "16px"
+            paddingTop: "40px",
+            paddingBottom: "40px"
           }}
         >
           {getSlides().map((item, idx) => {
