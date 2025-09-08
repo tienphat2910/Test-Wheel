@@ -98,13 +98,13 @@ export default function PrizePopup({
       if (copied) {
         setTimeout(() => {
           window.open(
-            `https://m.me/xyz.63631?text=${encodeURIComponent(code)}`,
+            `https://m.me/tianlonghcm?text=${encodeURIComponent(code)}`,
             "_blank"
           );
         }, 600);
       } else {
         window.open(
-          `https://m.me/xyz.63631?text=${encodeURIComponent(code)}`,
+          `https://m.me/tianlonghcm?text=${encodeURIComponent(code)}`,
           "_blank"
         );
       }
@@ -228,8 +228,8 @@ export default function PrizePopup({
               onClick={handleClaim}
               className="flex-1 h-[56px] text-white flex items-center justify-center font-voltra"
               style={{
-                fontSize: isAndroid ? 15 : 18,
-                borderRadius: isAndroid ? "0 0 0 40px" : "0 0 40px 40px",
+                fontSize: 18,
+                borderRadius: "0 0 40px 40px",
                 background:
                   "linear-gradient(180deg, #8F1713 0%, #CF3A05 114.44%)",
                 letterSpacing: 1,
@@ -238,24 +238,6 @@ export default function PrizePopup({
             >
               NHẬN NGAY
             </button>
-            {isAndroid && (
-              <button
-                onClick={handleCopyOnly}
-                className="flex-1 h-[56px] text-[#CF3A05] flex items-center justify-center font-voltra border-l border-[#CF3A05]"
-                style={{
-                  fontSize: 15,
-                  borderRadius: "0 0 40px 0",
-                  background: "#fff",
-                  letterSpacing: 1,
-                  cursor: "pointer",
-                  borderTop: "1px solid #CF3A05",
-                  borderRight: "1px solid #CF3A05",
-                  borderBottom: "1px solid #CF3A05"
-                }}
-              >
-                SAO CHÉP MÃ
-              </button>
-            )}
           </div>
           {/* Copy status & code */}
           {isAndroid && copyStatus && (
