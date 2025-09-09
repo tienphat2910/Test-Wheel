@@ -1,75 +1,45 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, EffectCoverflow } from "swiper/modules";
+import type { Swiper as SwiperType } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/effect-coverflow";
 import beefData from "@/data/beefData";
-import Image from "next/image";
+
+// Preload all beef images on mount
+function preloadImages(imageUrls: string[]) {
+  imageUrls.forEach((url) => {
+    const img = new window.Image();
+    img.src = url;
+  });
+}
 
 export default function BeefCarousel() {
-  const [current, setCurrent] = useState(0);
-  const [direction, setDirection] = useState(0); // 1: next, -1: prev
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  );
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
+    function handleResize() {
       setIsMobile(window.innerWidth < 768);
     }
+    window.addEventListener("resize", handleResize);
+    // Preload all beef images on first mount
+    preloadImages(beefData.map((item) => item.image));
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const prevSlide = () => {
-    setDirection(-1);
-    setCurrent((prev) => (prev - 1 + beefData.length) % beefData.length);
+    swiperInstance?.slidePrev();
   };
 
   const nextSlide = () => {
-    setDirection(1);
-    setCurrent((prev) => (prev + 1) % beefData.length);
-  };
-
-  // Luôn hiển thị 5 item, item giữa lớn nhất, 2 bên nhỏ dần
-  const getSlides = () => {
-    const total = beefData.length;
-    return [-2, -1, 0, 1, 2].map((offset) => {
-      const index = (current + offset + total) % total;
-      return { ...beefData[index], offset };
-    });
-  };
-
-  // Scroll item giữa về giữa container
-  useEffect(() => {
-    if (!scrollContainerRef.current) return;
-    const container = scrollContainerRef.current;
-    const cardWidth = 260; // bằng w-[260px]
-    const gap = 40; // bằng mr-[40px]
-    const containerWidth = container.offsetWidth;
-    // Item giữa là index 2 trong getSlides()
-    const centerIdx = 2;
-    // Chỉ scrollTo khi mount hoặc resize, không scroll khi current thay đổi
-    // container.scrollTo({ left: scrollLeft, behavior: "smooth" });
-  }, []);
-
-  // Animation variants for framer-motion
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 300 : -300,
-      opacity: 0,
-      scale: 0.75,
-      zIndex: 10
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1.1,
-      zIndex: 30,
-      transition: { duration: 0.5, type: "spring" as const }
-    },
-    exit: (direction: number) => ({
-      x: direction < 0 ? 300 : -300,
-      opacity: 0,
-      scale: 0.75,
-      zIndex: 10,
-      transition: { duration: 0.3 }
-    })
+    swiperInstance?.slideNext();
   };
 
   return (
@@ -81,7 +51,7 @@ export default function BeefCarousel() {
       "
       style={{
         width: "100%",
-        maxWidth: "2226px",
+        maxWidth: "1920px",
         height: "auto",
         minHeight: "0"
       }}
@@ -89,122 +59,76 @@ export default function BeefCarousel() {
       <div
         className="
           w-full flex flex-col items-center
-          md:w-[2226px] md:h-auto md:flex-shrink-0
+          md:w-[1920px] md:h-auto md:flex-shrink-0
         "
         style={{
           width: "100%",
-          maxWidth: "120vw",
+          maxWidth: "100vw",
           height: "auto",
           minHeight: "0"
         }}
       >
-        {/* Slide wrapper */}
-        <motion.div
-          ref={scrollContainerRef}
+        {/* Swiper wrapper */}
+        <div
           className="
-            flex justify-center items-center
             w-full
-            overflow-x-visible scrollbar-none gap-[24px] md:gap-[40px]
-            touch-pan-x
             pl-8 pr-8 md:pl-24 md:pr-24
           "
           style={{
             minHeight: "100%",
             paddingTop: "40px",
-            paddingBottom: "40px",
-            scrollBehavior: "smooth"
-          }}
-          drag={isMobile ? "x" : false}
-          dragConstraints={{ left: 0, right: 0 }}
-          onDragEnd={(e, info) => {
-            if (!isMobile) return;
-            if (info.offset.x < -80) nextSlide();
-            else if (info.offset.x > 80) prevSlide();
+            paddingBottom: "40px"
           }}
         >
-          <style>{`.scrollbar-none::-webkit-scrollbar { display: none; }`}</style>
-          {getSlides().map((item, idx) => {
-            // Tính toán scale và opacity dựa trên offset
-            let scale = 0.75;
-            let opacity = 0.5;
-            let zIndex = 10;
-            if (item.offset === 0) {
-              scale = 1.1;
-              opacity = 1;
-              zIndex = 30;
-            } else if (Math.abs(item.offset) === 1) {
-              scale = 1;
-              opacity = 0.9;
-              zIndex = 20;
-            } else if (Math.abs(item.offset) === 2) {
-              scale = 0.9;
-              opacity = 0.6;
-              zIndex = 15;
+          <style>{`
+            .scrollbar-none::-webkit-scrollbar { display: none; }
+            .beef-swiper .swiper-slide {
+              transition: all 300ms ease;
+              transform: scale(0.75);
+              opacity: 0.8;
             }
-            if (item.offset === 0) {
-              // Chỉ animate cho item giữa
-              return (
-                <motion.div
-                  key={`center-${current}`}
-                  className={
-                    "flex-shrink-0 w-[280px] md:w-[300px] lg:w-[390px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-visible"
-                  }
-                  style={{ zIndex }}
-                  initial={{
-                    x: direction > 0 ? 300 : -300,
-                    opacity: 0,
-                    scale: 0.75
-                  }}
-                  animate={{
-                    x: 0,
-                    opacity: 1,
-                    scale: 1.1,
-                    transition: { type: "spring", stiffness: 300, damping: 30 }
-                  }}
-                  exit={{
-                    x: direction < 0 ? 300 : -300,
-                    opacity: 0,
-                    scale: 0.75,
-                    transition: { duration: 0.3 }
-                  }}
+            .beef-swiper .swiper-slide-prev,
+            .beef-swiper .swiper-slide-next {
+              transform: scale(0.9);
+              opacity: 0.8;
+            }
+            .beef-swiper .swiper-slide-active {
+              transform: scale(1.1);
+              opacity: 1;
+            }
+          `}</style>
+
+          <Swiper
+            onSwiper={(swiper) => setSwiperInstance(swiper)}
+            className="beef-swiper"
+            modules={[Navigation]}
+            spaceBetween={isMobile ? 24 : 10}
+            slidesPerView={isMobile ? 1.5 : 3}
+            centeredSlides={true}
+            loop={true}
+            navigation={false}
+            style={{
+              overflow: "visible",
+              paddingTop: "20px",
+              paddingBottom: "20px"
+            }}
+          >
+            {beefData.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div
+                  className="
+                    flex-shrink-0 w-[280px] md:w-[300px] lg:w-[390px] h-[420px] md:h-[420px] lg:h-[580px] 
+                    bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 
+                    flex flex-col items-start overflow-visible mx-auto
+                  "
                 >
-                  <Image
+                  <img
                     src={item.image}
                     alt={item.title[0]}
                     width={390}
                     height={280}
                     className="w-full h-[180px] md:h-[240px] lg:h-[280px] object-cover rounded-[20px] mb-4"
-                  />
-                  <h3 className="text-lg md:text-2xl font-bold text-left text-black leading-snug utm-centur">
-                    {item.title[0]} <br />
-                    <span className="font-semibold">{item.title[1]}</span>
-                  </h3>
-                  {item.description.map((desc, i) => (
-                    <p
-                      key={i}
-                      className="text-sm md:text-lg text-black text-left mt-2 leading-relaxed kelson"
-                    >
-                      {desc}
-                    </p>
-                  ))}
-                </motion.div>
-              );
-            } else {
-              // Các item bên cạnh không animate, chỉ scale/opacity
-              return (
-                <div
-                  key={`side-${item.title[0]}-${item.offset}`}
-                  className={
-                    "flex-shrink-0 w-[220px] md:w-[300px] lg:w-[360px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-visible"
-                  }
-                  style={{ zIndex, transform: `scale(${scale})`, opacity }}
-                >
-                  <Image
-                    src={item.image}
-                    alt={item.title[0]}
-                    width={360}
-                    height={280}
-                    className="w-full h-[180px] md:h-[240px] lg:h-[280px] object-cover rounded-[20px] mb-4"
+                    loading="eager"
                   />
                   <h3 className="text-lg md:text-2xl font-bold text-left text-black leading-snug utm-centur">
                     {item.title[0]} <br />
@@ -219,10 +143,11 @@ export default function BeefCarousel() {
                     </p>
                   ))}
                 </div>
-              );
-            }
-          })}
-        </motion.div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+
         {/* Navigation */}
         <div
           className="mt-10 flex justify-center items-center gap-4"
