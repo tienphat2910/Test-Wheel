@@ -68,7 +68,7 @@ export default function LocationList() {
     <div className="relative w-full bg-[#080404]">
       <div
         ref={scrollContainerRef}
-        className={`flex flex-row flex-wrap gap-6 overflow-x-auto md:justify-center md:overflow-x-hidden scrollbar-none`}
+        className={`flex flex-row md:flex-wrap gap-6 overflow-x-auto md:justify-center md:overflow-x-hidden scrollbar-none`}
         style={{
           paddingLeft: isMobile ? `calc(30vw - 155px)` : undefined,
           paddingRight: isMobile ? `calc(30vw - 155px)` : undefined,
