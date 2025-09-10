@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 const cards = [
   {
@@ -57,6 +58,16 @@ export default function BeefCarousel() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Đảm bảo centeredIdx luôn là 0 trên mobile để hiển thị đúng 3 item
+  useEffect(() => {
+    if (width < 768 && centeredIdx !== 0) {
+      setCenteredIdx(0);
+    }
+    if (width >= 768 && centeredIdx === 0) {
+      setCenteredIdx(2);
+    }
+  }, [width]);
+
   // Tính vị trí tương đối của từng card so với center (có loop)
   const getRelativeIndex = (idx: number) => {
     let diff = idx - centeredIdx;
@@ -75,6 +86,11 @@ export default function BeefCarousel() {
     let zIndex = 1;
     let opacity = 0.5;
     let display = "block";
+    let translateX = relIdx * baseTranslate;
+    if (width >= 1024) {
+      if (relIdx === -2) translateX = -780;
+      if (relIdx === 2) translateX = 780;
+    }
     if (Math.abs(relIdx) > 2) {
       display = "none";
     }
@@ -93,7 +109,7 @@ export default function BeefCarousel() {
     }
     return {
       baseTranslate,
-      transform: `translateX(${relIdx * baseTranslate}px) scale(${scale})`,
+      transform: `translateX(${translateX}px) scale(${scale})`,
       zIndex,
       opacity,
       transition: "all 400ms cubic-bezier(0.4,0,0.2,1)",
@@ -108,8 +124,46 @@ export default function BeefCarousel() {
     setCenteredIdx((prev) => (prev + 1) % total);
   };
 
+  // Swipe support for mobile
+  useEffect(() => {
+    let startX = 0;
+    let isSwiped = false;
+    const handleTouchStart = (e: TouchEvent) => {
+      startX = e.touches[0].clientX;
+      isSwiped = false;
+    };
+    const handleTouchMove = (e: TouchEvent) => {
+      if (width < 768 && !isSwiped) {
+        const diff = e.touches[0].clientX - startX;
+        if (Math.abs(diff) > 40) {
+          if (diff < 0) nextSlide();
+          else prevSlide();
+          isSwiped = true;
+        }
+      }
+    };
+    const handleTouchEnd = () => {
+      startX = 0;
+      isSwiped = false;
+    };
+    const carousel = document.getElementById("beef-carousel-touch");
+    if (carousel) {
+      carousel.addEventListener("touchstart", handleTouchStart);
+      carousel.addEventListener("touchmove", handleTouchMove);
+      carousel.addEventListener("touchend", handleTouchEnd);
+    }
+    return () => {
+      if (carousel) {
+        carousel.removeEventListener("touchstart", handleTouchStart);
+        carousel.removeEventListener("touchmove", handleTouchMove);
+        carousel.removeEventListener("touchend", handleTouchEnd);
+      }
+    };
+  }, [width]);
+
   return (
     <div
+      id="beef-carousel-touch"
       className="relative flex flex-col items-center md:px-0 overflow-hidden justify-center"
       style={{
         width: "100%",
@@ -143,30 +197,21 @@ export default function BeefCarousel() {
                 key={idx}
                 className="beef-carousel-item flex-shrink-0 w-[240px] md:w-[300px] lg:w-[390px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-visible mx-auto absolute left-1/2 top-1/2"
                 style={{
-                  transform: `translate(-50%, -50%) translateX(${
-                    relIdx * style.baseTranslate
-                  }px) scale(${
-                    relIdx === 0
-                      ? 1.15
-                      : Math.abs(relIdx) === 1
-                      ? 0.95
-                      : Math.abs(relIdx) === 2
-                      ? 0.85
-                      : 0.8
-                  })`,
+                  transform: `translate(-50%, -50%) ${style.transform}`,
                   zIndex: style.zIndex,
                   opacity: style.opacity,
                   transition: style.transition,
                   display: style.display
                 }}
               >
-                <img
+                <Image
                   src={item.image}
                   alt={item.title}
                   width={390}
                   height={280}
                   className="w-full h-[180px] md:h-[240px] lg:h-[280px] object-cover rounded-[20px] mb-4"
                   loading="eager"
+                  priority={idx === centeredIdx}
                 />
                 <h3 className="text-lg md:text-2xl font-bold text-left text-black leading-snug utm-centur">
                   {item.title} <br />
