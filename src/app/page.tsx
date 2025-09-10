@@ -56,10 +56,11 @@ export default function Home() {
               />
             </div>
             {/* WheelSpinner nằm chồng trên banner */}
-            <div className="translate-x-1/2 z-30 w-full flex flex-col mt-120 md:mt-130">
-              <div className="w-full max-w-[100px] px-2 md:px-0">
-                <WheelSpinner onPrizeResult={handlePrizeResult} />
-              </div>
+            <div
+              className="absolute left-1/2 -translate-x-1/2 bottom-0 z-30 flex flex-col items-center justify-end"
+              style={{ width: 360, height: 360, minWidth: 360, minHeight: 360 }}
+            >
+              <WheelSpinner onPrizeResult={handlePrizeResult} />
             </div>
           </div>
         </div>
