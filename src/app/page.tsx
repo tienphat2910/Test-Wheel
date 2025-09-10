@@ -45,7 +45,7 @@ export default function Home() {
             }}
           >
             {/* Logo gần text, không sát phải */}
-            <div className="absolute top-[12%] right-[25%] z-20">
+            <div className="absolute top-[12%] right-[15%] z-20 block">
               <Image
                 src="/assets/logo-tianlong.png"
                 alt="Tianlong Logo"
