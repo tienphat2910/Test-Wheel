@@ -1,163 +1,195 @@
 "use client";
-import { useRef, useState, useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, EffectCoverflow } from "swiper/modules";
-import type { Swiper as SwiperType } from "swiper";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/effect-coverflow";
-import beefData from "@/data/beefData";
+import { useState, useEffect } from "react";
 
-// Preload all beef images on mount
-function preloadImages(imageUrls: string[]) {
-  imageUrls.forEach((url) => {
-    const img = new window.Image();
-    img.src = url;
-  });
-}
+const cards = [
+  {
+    image: "/assets/diem-than-bo.jpg",
+    title: "Diềm Thăn Bò",
+    price: "(Trị giá 99.000 VND)",
+    desc1:
+      "Thớ thịt mềm xen gân giòn, sần sật đầy lôi cuốn, để lại hậu vị ngọt tự nhiên.",
+    desc2: "⏱ Nhúng 10 giây để giữ trọn độ giòn dai và vị ngọt nguyên bản."
+  },
+  {
+    image: "/assets/thit-vai-bo.jpg",
+    title: "Thịt Vai Bò",
+    price: "(Trị giá 89.000 VND)",
+    desc1:
+      "Thớ thịt hồng hào, săn chắc, giữ nguyên chất ngọt nguyên bản của bò tươi.",
+    desc2: "⏱ Nhúng 10 giây để đạt độ chín vừa, mềm mà vẫn chắc thớ."
+  },
+  {
+    image: "/assets/de-suon.jpg",
+    title: "Dẻ Sườn",
+    price: "(Trị giá 89.000 VND)",
+    desc1:
+      "Thịt chắc đan xen mỡ mềm, ngọt béo đậm đà, dậy hương khi vừa nhúng nước lẩu.",
+    desc2: "⏱ Nhúng 13 giây để đạt độ mềm béo tròn vị, thơm đậm khó quên."
+  },
+  {
+    image: "/assets/gu-hoa.jpg",
+    title: "Gù Hoa",
+    price: "(Trị giá 99.000 VND)",
+    desc1:
+      "Phần thịt cực hiếm, vân mỡ trắng mịn, béo thanh quyện nạc ngọt, mang đến trải nghiệm tinh tuyển khó tìm.",
+    desc2: "⏱ Nhúng 10 giây để mỡ tan nhẹ, hòa quyện trọn hương vị độc bản."
+  },
+  {
+    image: "/assets/than-dau-rong.jpg",
+    title: "Thăn Đầu Rồng",
+    price: "(Trị giá 99.000 VND)",
+    desc1:
+      "Hiếm có với tỷ lệ nạc - mỡ cân bằng hoàn hảo, thịt mềm mọng, đậm đà chuẩn gu sành.",
+    desc2: "⏱ Nhúng 10 giây để chín tái, lan tỏa vị béo tinh tế."
+  }
+];
 
 export default function BeefCarousel() {
-  const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" ? window.innerWidth < 768 : false
+  const [centeredIdx, setCenteredIdx] = useState(2); // index 2 là card giữa
+  const [width, setWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 1920
   );
+  const total = cards.length;
 
   useEffect(() => {
-    function handleResize() {
-      setIsMobile(window.innerWidth < 768);
-    }
+    const handleResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
-    // Preload all beef images on first mount
-    preloadImages(beefData.map((item) => item.image));
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const prevSlide = () => {
-    swiperInstance?.slidePrev();
+  // Tính vị trí tương đối của từng card so với center (có loop)
+  const getRelativeIndex = (idx: number) => {
+    let diff = idx - centeredIdx;
+    if (diff > total / 2) diff -= total;
+    if (diff < -total / 2) diff += total;
+    return diff;
   };
 
+  // Hiệu ứng slide
+  const getStyle = (relIdx: number) => {
+    let cardWidth = 240; // default mobile
+    if (width >= 1024) cardWidth = 390;
+    else if (width >= 768) cardWidth = 300;
+    // Tính baseTranslate đều cho mọi màn hình
+    let baseTranslate = cardWidth * 0.8; // mobile
+    if (width >= 1024) baseTranslate = cardWidth * 0.95;
+    else if (width >= 768) baseTranslate = cardWidth * 0.92;
+    let scale = 0.8;
+    let zIndex = 1;
+    let opacity = 0.5;
+    let display = "block";
+    if (Math.abs(relIdx) > 2) {
+      display = "none";
+    }
+    if (relIdx === 0) {
+      scale = 1.15;
+      zIndex = 3;
+      opacity = 1;
+    } else if (Math.abs(relIdx) === 1) {
+      scale = 0.95;
+      zIndex = 2;
+      opacity = 0.8;
+    } else if (Math.abs(relIdx) === 2) {
+      scale = 0.85;
+      zIndex = 1;
+      opacity = 0.6;
+    }
+    return {
+      baseTranslate,
+      transform: `translateX(${relIdx * baseTranslate}px) scale(${scale})`,
+      zIndex,
+      opacity,
+      transition: "all 400ms cubic-bezier(0.4,0,0.2,1)",
+      display
+    };
+  };
+
+  const prevSlide = () => {
+    setCenteredIdx((prev) => (prev - 1 + total) % total);
+  };
   const nextSlide = () => {
-    swiperInstance?.slideNext();
+    setCenteredIdx((prev) => (prev + 1) % total);
   };
 
   return (
     <div
-      className="
-        relative flex flex-col items-center
-        md:px-0
-        overflow-hidden
-      "
+      className="relative flex flex-col items-center md:px-0 overflow-hidden justify-center"
       style={{
         width: "100%",
         maxWidth: "1920px",
-        height: "auto",
         minHeight: "0"
       }}
     >
       <div
-        className="
-          w-full flex flex-col items-center
-          md:w-[1920px] md:h-auto md:flex-shrink-0
-        "
+        className="w-full flex flex-col items-center md:w-[1920px] md:flex-shrink-0"
         style={{
           width: "100%",
           maxWidth: "100vw",
-          height: "auto",
           minHeight: "0"
         }}
       >
-        {/* Swiper wrapper */}
+        {/* Carousel */}
         <div
-          className="
-            w-full
-            pl-2 pr-2 md:pl-24 md:pr-24
-          "
+          className="w-full flex justify-center items-center relative"
           style={{
             minHeight: "100%",
             paddingTop: "40px",
-            paddingBottom: "40px"
+            paddingBottom: "40px",
+            height: 700 // tăng chiều cao để chứa card scale 1.15
           }}
         >
-          <style>{`
-            .scrollbar-none::-webkit-scrollbar { display: none; }
-            .beef-swiper .swiper-slide {
-              transition: all 300ms ease;
-              transform: scale(0.75);
-              opacity: 0.8;
-              z-index: 1;
-            }
-            .beef-swiper .swiper-slide-prev,
-            .beef-swiper .swiper-slide-next {
-              transform: scale(0.9);
-              opacity: 0.8;
-              z-index: 2;
-            }
-            .beef-swiper .swiper-slide-active {
-              transform: scale(1.1);
-              opacity: 1;
-              z-index: 3;
-            }
-          `}</style>
-
-          <Swiper
-            onSwiper={(swiper) => setSwiperInstance(swiper)}
-            className="beef-swiper"
-            modules={[Navigation]}
-            spaceBetween={isMobile ? 10 : 32}
-            slidesPerView={isMobile ? 1.5 : 2.8}
-            centeredSlides={true}
-            loop={true}
-            navigation={false}
-            style={{
-              overflow: "visible",
-              paddingTop: "20px",
-              paddingBottom: "20px"
-            }}
-          >
-            {beefData.map((item, index) => (
-              <SwiperSlide key={index}>
-                <div
-                  className="
-                    flex-shrink-0 w-[240px] md:w-[300px] lg:w-[390px] h-[420px] md:h-[420px] lg:h-[580px] 
-                    bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 
-                    flex flex-col items-start overflow-visible mx-auto
-                  "
-                >
-                  <img
-                    src={item.image}
-                    alt={item.title[0]}
-                    width={390}
-                    height={280}
-                    className="w-full h-[180px] md:h-[240px] lg:h-[280px] object-cover rounded-[20px] mb-4"
-                    loading="eager"
-                  />
-                  <h3 className="text-lg md:text-2xl font-bold text-left text-black leading-snug utm-centur">
-                    {item.title[0]} <br />
-                    <span className="font-semibold">{item.title[1]}</span>
-                  </h3>
-                  {item.description.map((desc, i) => (
-                    <p
-                      key={i}
-                      className="text-sm md:text-lg text-black text-left mt-2 leading-relaxed kelson"
-                    >
-                      {desc}
-                    </p>
-                  ))}
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {cards.map((item, idx) => {
+            const relIdx = getRelativeIndex(idx);
+            const style = getStyle(relIdx);
+            return (
+              <div
+                key={idx}
+                className="beef-carousel-item flex-shrink-0 w-[240px] md:w-[300px] lg:w-[390px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-visible mx-auto absolute left-1/2 top-1/2"
+                style={{
+                  transform: `translate(-50%, -50%) translateX(${
+                    relIdx * style.baseTranslate
+                  }px) scale(${
+                    relIdx === 0
+                      ? 1.15
+                      : Math.abs(relIdx) === 1
+                      ? 0.95
+                      : Math.abs(relIdx) === 2
+                      ? 0.85
+                      : 0.8
+                  })`,
+                  zIndex: style.zIndex,
+                  opacity: style.opacity,
+                  transition: style.transition,
+                  display: style.display
+                }}
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  width={390}
+                  height={280}
+                  className="w-full h-[180px] md:h-[240px] lg:h-[280px] object-cover rounded-[20px] mb-4"
+                  loading="eager"
+                />
+                <h3 className="text-lg md:text-2xl font-bold text-left text-black leading-snug utm-centur">
+                  {item.title} <br />
+                  <span className="font-semibold">{item.price}</span>
+                </h3>
+                <p className="text-sm md:text-lg text-black text-left mt-2 leading-relaxed kelson">
+                  {item.desc1}
+                </p>
+                <p className="text-sm md:text-lg text-black text-left mt-2 leading-relaxed kelson">
+                  {item.desc2}
+                </p>
+              </div>
+            );
+          })}
         </div>
 
         {/* Navigation */}
         <div
           className="mt-10 flex justify-center items-center gap-4"
-          style={{
-            height: "60px",
-            flexShrink: 0
-          }}
+          style={{ height: "60px", flexShrink: 0 }}
         >
           {/* Nút trái */}
           <div className="w-[48px] h-[48px] md:w-[60px] md:h-[60px] flex justify-center items-center">
@@ -195,7 +227,6 @@ export default function BeefCarousel() {
               </svg>
             </button>
           </div>
-
           {/* Nút phải */}
           <div className="w-[48px] h-[48px] md:w-[60px] md:h-[60px] flex justify-center items-center">
             <button onClick={nextSlide}>
