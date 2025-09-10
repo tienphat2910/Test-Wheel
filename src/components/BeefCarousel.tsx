@@ -186,7 +186,7 @@ export default function BeefCarousel() {
             minHeight: "100%",
             paddingTop: "40px",
             paddingBottom: "40px",
-            height: 700 // tăng chiều cao để chứa card scale 1.15
+            height: 700
           }}
         >
           {cards.map((item, idx) => {
