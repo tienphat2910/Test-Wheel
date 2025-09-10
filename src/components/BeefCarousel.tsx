@@ -70,10 +70,7 @@ export default function BeefCarousel() {
     let cardWidth = 240; // default mobile
     if (width >= 1024) cardWidth = 390;
     else if (width >= 768) cardWidth = 300;
-    // Tính baseTranslate đều cho mọi màn hình
-    let baseTranslate = cardWidth * 0.8; // mobile
-    if (width >= 1024) baseTranslate = cardWidth * 0.95;
-    else if (width >= 768) baseTranslate = cardWidth * 0.92;
+    const baseTranslate = width < 768 ? cardWidth * 0.8 : 420;
     let scale = 0.8;
     let zIndex = 1;
     let opacity = 0.5;
