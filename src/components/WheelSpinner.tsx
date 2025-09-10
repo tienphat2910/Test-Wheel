@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import WHEEL_PRIZES from "@/data/wheelPrizes";
 import type { PrizeData } from "@components/PrizePopup";
 
@@ -16,6 +16,25 @@ export default function WheelSpinner({
   // Bắt đầu lệch 36° để pointer (ở đáy) nằm đúng biên giữa "Gù hoa" và "Dẻ sườn"
   const [rotation, setRotation] = useState(36);
   const [_resultIdx, setResultIdx] = useState<number | null>(null); // renamed to _resultIdx to avoid unused warning
+  const [desktopScale, setDesktopScale] = useState(1);
+
+  useEffect(() => {
+    // Only apply on desktop
+    const updateScale = () => {
+      if (typeof window !== "undefined" && window.innerWidth >= 768) {
+        setDesktopScale(1 / window.devicePixelRatio);
+      } else {
+        setDesktopScale(1);
+      }
+    };
+    updateScale();
+    window.addEventListener("resize", updateScale);
+    window.addEventListener("orientationchange", updateScale);
+    return () => {
+      window.removeEventListener("resize", updateScale);
+      window.removeEventListener("orientationchange", updateScale);
+    };
+  }, []);
 
   const spinWheel = () => {
     if (isSpinning) return;
@@ -96,9 +115,9 @@ export default function WheelSpinner({
         </div>
         {/* Wheel for desktop */}
         <div
-          className="hidden md:block relative w-[360px] lg:w-[600px] xl:w-[807px] h-auto flex-shrink-0 max-w-[90vw]"
+          className="hidden md:block relative w-[360px] lg:w-[600px] xl:w-[807px] h-[360px] lg:h-[600px] xl:h-[807px] flex-shrink-0"
           style={{
-            transform: `rotate(${rotation}deg)`,
+            transform: `scale(${desktopScale}) rotate(${rotation}deg)`,
             transition: isSpinning
               ? "transform 3s cubic-bezier(0.23, 1, 0.32, 1)"
               : "none"
@@ -109,14 +128,17 @@ export default function WheelSpinner({
             alt="Spinning Wheel"
             width={807}
             height={810}
-            className="w-full h-auto object-contain"
+            className="w-full h-full object-contain"
             priority
           />
         </div>
         {/* Pointer - smaller on mobile */}
         <div
-          className="absolute left-1/2 transform -translate-x-1/2 z-10 sm:bottom-[-22px] md:bottom-[-18px] lg:bottom-[-4px]"
-          style={{ bottom: "0px" }} // mobile
+          className="absolute left-1/2 z-10"
+          style={{
+            bottom: 0,
+            transform: "translateX(-50%)"
+          }}
         >
           <svg
             className="w-[28px] sm:w-[36px] md:w-[41px] lg:w-[60px] h-auto"

@@ -160,7 +160,7 @@ export default function Home() {
               xoay thành một trải nghiệm vị giác độc bản dành riêng cho Đồng Gu.
             </div>
           </div>
-          <div className="mt-8 md:mt-2 lg:mt-16 w-full flex justify-center max-w-[2206px] ">
+          <div className="mt-8 md:mt-12 lg:mt-16 w-full flex justify-center max-w-[2206px] ">
             <div className="w-full max-w-[1980px] max-h-[1000px] h-full px-2 md:px-0">
               <BeefCarousel />
             </div>
