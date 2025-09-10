@@ -36,16 +36,16 @@ export default function Home() {
           <div
             className="relative flex flex-col items-center w-full mb-5"
             style={{
-              width: "100%",
-              maxWidth: "1920px",
+              width: "100vw",
+              maxWidth: "100vw",
               height: "auto",
               aspectRatio: "64/55",
               background:
-                "url('/assets/banner-desktop.png') lightgray 50% / cover no-repeat"
+                "url('/assets/banner-desktop.png') lightgray 50% 0% / 100vw auto no-repeat"
             }}
           >
             {/* Logo gần text, không sát phải */}
-            <div className="absolute top-[12%] right-[19%] z-20">
+            <div className="absolute top-[12%] right-[25%] z-20">
               <Image
                 src="/assets/logo-tianlong.png"
                 alt="Tianlong Logo"

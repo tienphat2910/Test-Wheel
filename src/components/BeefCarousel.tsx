@@ -72,7 +72,7 @@ export default function BeefCarousel() {
         <div
           className="
             w-full
-            pl-8 pr-8 md:pl-24 md:pr-24
+            pl-2 pr-2 md:pl-24 md:pr-24
           "
           style={{
             minHeight: "100%",
@@ -86,15 +86,18 @@ export default function BeefCarousel() {
               transition: all 300ms ease;
               transform: scale(0.75);
               opacity: 0.8;
+              z-index: 1;
             }
             .beef-swiper .swiper-slide-prev,
             .beef-swiper .swiper-slide-next {
               transform: scale(0.9);
               opacity: 0.8;
+              z-index: 2;
             }
             .beef-swiper .swiper-slide-active {
               transform: scale(1.1);
               opacity: 1;
+              z-index: 3;
             }
           `}</style>
 
@@ -102,8 +105,8 @@ export default function BeefCarousel() {
             onSwiper={(swiper) => setSwiperInstance(swiper)}
             className="beef-swiper"
             modules={[Navigation]}
-            spaceBetween={isMobile ? 24 : 10}
-            slidesPerView={isMobile ? 1.5 : 3}
+            spaceBetween={isMobile ? 10 : 32}
+            slidesPerView={isMobile ? 1.5 : 2.8}
             centeredSlides={true}
             loop={true}
             navigation={false}
@@ -117,7 +120,7 @@ export default function BeefCarousel() {
               <SwiperSlide key={index}>
                 <div
                   className="
-                    flex-shrink-0 w-[280px] md:w-[300px] lg:w-[390px] h-[420px] md:h-[420px] lg:h-[580px] 
+                    flex-shrink-0 w-[240px] md:w-[300px] lg:w-[390px] h-[420px] md:h-[420px] lg:h-[580px] 
                     bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 
                     flex flex-col items-start overflow-visible mx-auto
                   "
