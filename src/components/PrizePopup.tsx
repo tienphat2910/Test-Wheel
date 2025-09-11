@@ -72,12 +72,12 @@ export default function PrizePopup({
 
     if (isAndroid) {
       window.open(
-        `https://m.me/xyz.63631?text=${encodeURIComponent(text)}`,
+        `https://m.me/tianlonghcm?text=${encodeURIComponent(text)}`,
         "_blank"
       );
     } else {
       window.open(
-        `https://m.me/xyz.63631?text=${encodeURIComponent(text)}`,
+        `https://m.me/tianlonghcm?text=${encodeURIComponent(text)}`,
         "_blank"
       );
     }
