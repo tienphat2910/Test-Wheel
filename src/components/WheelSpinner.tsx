@@ -100,7 +100,7 @@ export default function WheelSpinner({
           style={{
             transform: `rotate(${rotation}deg)`,
             transition: isSpinning
-              ? "transform 15s cubic-bezier(0.23, 1, 0.32, 1)"
+              ? "transform 10s cubic-bezier(0.23, 1, 0.32, 1)"
               : "none",
             cursor: isSpinning ? "default" : "pointer"
           }}
