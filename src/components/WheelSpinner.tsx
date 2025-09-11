@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import WHEEL_PRIZES from "@/data/wheelPrizes";
 import type { PrizeData } from "@components/PrizePopup";
@@ -10,7 +9,7 @@ type WheelSpinnerProps = {
 };
 
 export default function WheelSpinner({
-  onPrizeResult
+  onPrizeResult,
 }: WheelSpinnerProps = {}) {
   const [isSpinning, setIsSpinning] = useState(false);
   // Bắt đầu lệch 36° để pointer (ở đáy) nằm đúng biên giữa "Gù hoa" và "Dẻ sườn"
@@ -48,13 +47,13 @@ export default function WheelSpinner({
       if (typeof win.gtag === "function") {
         win.gtag("event", "spin_wheel_click", {
           event_category: "wheel",
-          event_label: "Nhấn để xoay"
+          event_label: "Nhấn để xoay",
         });
       } else if (Array.isArray(win.dataLayer)) {
         win.dataLayer.push({
           event: "spin_wheel_click",
           event_category: "wheel",
-          event_label: "Nhấn để xoay"
+          event_label: "Nhấn để xoay",
         });
       }
     }
@@ -102,17 +101,17 @@ export default function WheelSpinner({
             transition: isSpinning
               ? "transform 10s cubic-bezier(0.23, 1, 0.32, 1)"
               : "none",
-            cursor: isSpinning ? "default" : "pointer"
+            cursor: isSpinning ? "default" : "pointer",
           }}
           onClick={() => !isSpinning && spinWheel()}
         >
-          <Image
+          <img
             src="/assets/wheel.png"
             alt="Spinning Wheel"
             width={1000}
             height={810}
             className="w-full h-full object-cover"
-            priority
+            style={{ display: "block" }}
           />
         </div>
         {/* Wheel for desktop */}
@@ -121,27 +120,29 @@ export default function WheelSpinner({
           style={{
             transform: `scale(${desktopScale}) rotate(${rotation}deg)`,
             transition: isSpinning
-              ? "transform 3s cubic-bezier(0.23, 1, 0.32, 1)"
+              ? "transform 10s cubic-bezier(0.23, 1, 0.32, 1)" // set to 10s for desktop
               : "none",
-            cursor: isSpinning ? "default" : "pointer"
+            cursor: isSpinning ? "default" : "pointer",
           }}
           onClick={() => !isSpinning && spinWheel()}
         >
-          <Image
+          <img
             src="/assets/wheel.png"
             alt="Spinning Wheel"
             width={807}
             height={810}
             className="w-full h-full object-contain"
-            priority
+            style={{ display: "block" }}
           />
         </div>
-        {/* Pointer - smaller on mobile */}
+        {/* Pointer - smaller on mobile, scale with wheel on desktop */}
         <div
           className="absolute left-1/2 z-10"
           style={{
             bottom: 0,
-            transform: "translateX(-50%)"
+            transform: `translateX(-50%) translateY(-12%) scale(1)`, // scale pointer and move up a bit
+            transition: "transform 0.2s",
+            pointerEvents: "none",
           }}
         >
           <svg
@@ -214,7 +215,7 @@ export default function WheelSpinner({
               letterSpacing: 0,
               lineHeight: "1.1",
               WebkitFontSmoothing: "antialiased",
-              MozOsxFontSmoothing: "grayscale"
+              MozOsxFontSmoothing: "grayscale",
             }}
           >
             {isSpinning ? "Đang quay..." : "Nhấn để xoay"}
