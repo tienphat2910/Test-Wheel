@@ -62,7 +62,7 @@ export async function GET(req: NextRequest) {
 // Nhận & xử lý tin nhắn (POST)
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const tasks: Promise<any>[] = [];
+  const tasks: Promise<void>[] = [];
 
   if (body.object === "page") {
     for (const entry of body.entry) {
