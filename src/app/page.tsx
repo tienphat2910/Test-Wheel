@@ -114,7 +114,7 @@ export default function Home() {
                     bottom: 0,
                     left: 0,
                     width: "100%",
-                    height: 160, // chỉnh số px này để tạo khoảng thụt xuống mong muốn
+                    height: 180, // chỉnh số px này để tạo khoảng thụt xuống mong muốn
                     background: "black",
                     zIndex: -1
                   }}
