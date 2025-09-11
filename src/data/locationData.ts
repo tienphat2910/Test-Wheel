@@ -16,7 +16,7 @@ const LOCATIONS: Location[] = [
     phone: "085 294 3388"
   },
   {
-    title: ["TIAN LONG", "Nguyễn Thị Thập", "(Coming soon)"],
+    title: ["TIAN LONG", "Nguyễn Thị Thập"],
     address: "Số 541 Nguyễn Thị Thập, Phường Tân Hưng",
     phone: "085 294 2266"
   },

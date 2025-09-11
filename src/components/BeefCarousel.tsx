@@ -186,7 +186,7 @@ export default function BeefCarousel() {
             minHeight: "100%",
             paddingTop: "40px",
             paddingBottom: "40px",
-            height: 700
+            height: width >= 768 ? 700 : 550 // 700px cho desktop, 550px cho mobile
           }}
         >
           {cards.map((item, idx) => {

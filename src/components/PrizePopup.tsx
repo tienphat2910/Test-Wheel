@@ -15,18 +15,9 @@ type PrizePopupProps = {
   onClaim?: () => void;
 };
 
-function generateCode(option: string): string {
-  // Lấy ký tự đầu của từng từ trong tên option (chỉ lấy chữ cái đầu, không dấu)
-  const initials = option
-    .split(" ")
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
-  // Random 3 số cuối
-  const randomNum = Math.floor(Math.random() * 1000)
-    .toString()
-    .padStart(3, "0");
-  return `TIANLONG${initials}${randomNum}`;
+function getBeefName(option: string) {
+  // Lấy phần trước dấu "-" nếu có
+  return option.split("-")[0].trim();
 }
 
 export default function PrizePopup({
@@ -75,48 +66,18 @@ export default function PrizePopup({
       }
     }
 
-    const code = generateCode(data.option);
+    // Tạo text gửi Messenger
+    const beefName = getBeefName(data.option);
+    const text = `Tôi đã nhận được món ${beefName} từ chương trình`;
 
-    // Chỉ hiện thông báo copy trên Android, còn lại thì không hiện gì
     if (isAndroid) {
-      let copied = false;
-      if (canClipboardWork()) {
-        try {
-          await navigator.clipboard.writeText(code);
-          setCopyStatus("Đã copy mã vào clipboard!");
-          copied = true;
-        } catch {
-          setCopyStatus(
-            "Không thể tự động copy, vui lòng copy thủ công mã bên dưới."
-          );
-        }
-      } else {
-        setCopyStatus(
-          "Không thể tự động copy, vui lòng copy thủ công mã bên dưới."
-        );
-      }
-      if (copied) {
-        setTimeout(() => {
-          window.open(
-            `https://m.me/Tien.phat.xyz.63631?text=${encodeURIComponent(code)}`,
-            "_blank"
-          );
-        }, 600);
-      } else {
-        window.open(
-          `https://m.me/xyz.63631?text=${encodeURIComponent(code)}`,
-          "_blank"
-        );
-      }
-    } else {
-      // Web/iOS: chỉ copy, không hiện thông báo, không hiện code
-      if (typeof window !== "undefined" && navigator.clipboard) {
-        try {
-          await navigator.clipboard.writeText(code);
-        } catch {}
-      }
       window.open(
-        `https://m.me/xyz.63631?text=${encodeURIComponent(code)}`,
+        `https://m.me/xyz.63631?text=${encodeURIComponent(text)}`,
+        "_blank"
+      );
+    } else {
+      window.open(
+        `https://m.me/xyz.63631?text=${encodeURIComponent(text)}`,
         "_blank"
       );
     }
@@ -126,21 +87,8 @@ export default function PrizePopup({
 
   // Nút sao chép riêng cho Android
   const handleCopyOnly = async () => {
-    const code = generateCode(data.option);
-    if (canClipboardWork()) {
-      try {
-        await navigator.clipboard.writeText(code);
-        setCopyStatus("Đã copy mã vào clipboard!");
-      } catch {
-        setCopyStatus(
-          "Không thể tự động copy, vui lòng copy thủ công mã bên dưới."
-        );
-      }
-    } else {
-      setCopyStatus(
-        "Không thể tự động copy, vui lòng copy thủ công mã bên dưới."
-      );
-    }
+    // Đã bỏ generateCode, không còn chức năng copy code
+    setCopyStatus(null);
   };
 
   return (
@@ -246,12 +194,6 @@ export default function PrizePopup({
             <div className="w-full flex flex-col items-center mt-2 mb-2">
               <span className="text-black text-sm md:text-base">
                 {copyStatus}
-              </span>
-              <span
-                className="font-mono text-black bg-[#f5f5f5] rounded px-2 py-1 mt-1 select-all"
-                style={{ wordBreak: "break-all" }}
-              >
-                {generateCode(data.option)}
               </span>
             </div>
           )}

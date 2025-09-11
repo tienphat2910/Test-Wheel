@@ -71,20 +71,27 @@ export async function POST(req: NextRequest) {
       if (event && event.message && event.message.text) {
         const senderId = event.sender.id;
         const messageText = event.message.text.trim();
-        // Kiểm tra mã hợp lệ PrizePopup (bắt đầu bằng TIANLONG, theo PrizePopup)
-        const codeMatch = /^TIANLONG([A-ZĐ]+)(\d{3})$/i.exec(messageText);
-        if (codeMatch) {
-          let beefKey = codeMatch[1].toUpperCase();
-          if (beefKey === "DS") beefKey = "DS";
-          else if (beefKey === "TDR" || beefKey === "TĐR") beefKey = "TĐR";
-          else if (beefKey === "GH") beefKey = "GH";
-          else if (beefKey === "VT") beefKey = "VT";
-          else if (beefKey === "DT") beefKey = "DT";
-          const beef = beefMap[beefKey];
+        // Nếu là text xác nhận nhận thưởng
+        const beefName = getBeefNameFromText(messageText);
+        if (beefName) {
+          const beef = Object.values(beefMap).find((item) => {
+            const name = item.title.split("-")[0].trim().toLowerCase();
+            return name === beefName.toLowerCase();
+          });
           if (beef) {
             tasks.push(sendBeefPrizeMessage(senderId, beef.title, beef.image));
             continue;
           }
+        }
+        // Nếu là text "Tôi muốn đặt bàn ngay"
+        if (messageText === "Tôi muốn đặt bàn ngay") {
+          tasks.push(
+            sendMessage(
+              senderId,
+              "Cảm ơn bạn đã đặt bàn! Nhân viên Tian Long sẽ liên hệ hỗ trợ bạn trong thời gian sớm nhất."
+            )
+          );
+          continue;
         }
         // Nếu không hợp lệ thì không trả lời gì cả
       } else if (
@@ -93,6 +100,7 @@ export async function POST(req: NextRequest) {
         event.postback.payload === "Tôi muốn đặt bàn ngay"
       ) {
         const senderId = event.sender.id;
+        // Gửi lại text như user tự gửi
         tasks.push(sendMessage(senderId, "Tôi muốn đặt bàn ngay"));
         continue;
       }
@@ -103,6 +111,15 @@ export async function POST(req: NextRequest) {
   } else {
     return new NextResponse(null, { status: 404 });
   }
+}
+
+function getBeefNameFromText(text: string): string | null {
+  // Tìm theo mẫu "Tôi đã nhận được món {Tên Món} từ chương trình"
+  const match = /Tôi đã nhận được món (.+?) từ chương trình/i.exec(text);
+  if (match) {
+    return match[1].trim();
+  }
+  return null;
 }
 
 async function sendMessage(senderId: string, text: string) {
