@@ -84,7 +84,7 @@ export default function WheelSpinner({
       if (onPrizeResult) {
         onPrizeResult(randomSection, WHEEL_PRIZES[randomSection] as PrizeData);
       }
-    }, 3000);
+    }, 10000);
   };
 
   return (
