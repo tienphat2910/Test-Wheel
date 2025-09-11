@@ -1,45 +1,49 @@
 import { NextRequest, NextResponse } from "next/server";
-import beefData from "@/data/beefData";
+// import beefData from "@/data/beefData";
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 
-// Map ký hiệu sang tên món và image (lấy title[0])
-const beefMap: Record<string, { title: string; image: string }> = {
-  DS: {
-    title:
-      beefData.find((item) => item.title.includes("Dẻ Sườn"))?.title[0] ||
-      "Dẻ Sườn",
-    image: beefData.find((item) => item.title.includes("Dẻ Sườn"))?.image || ""
+// Dữ liệu beef mới
+const beefArray = [
+  {
+    title: "Diềm Thăn Bò - Trị giá 99.000 VND",
+    image: "https://tianlong.vn/Upload/Products/091224091648.jpg"
   },
-  TĐR: {
-    title:
-      beefData.find((item) => item.title.includes("Thăn Đầu Rồng"))?.title[0] ||
-      "Thăn Đầu Rồng",
-    image:
-      beefData.find((item) => item.title.includes("Thăn Đầu Rồng"))?.image || ""
+  {
+    title: "Thịt Vai Bò - Trị giá 89.000 VND",
+    image: "https://tianlong.vn/Upload/Products/071224120309.jpg"
   },
-  GH: {
-    title:
-      beefData.find((item) => item.title.includes("Gù Hoa"))?.title[0] ||
-      "Gù Hoa",
-    image: beefData.find((item) => item.title.includes("Gù Hoa"))?.image || ""
+  {
+    title: "Dẻ Sườn - Trị giá 89.000 VND",
+    image: "https://tianlong.vn/Upload/Products/091224091754.jpg"
   },
-  VT: {
-    title:
-      beefData.find((item) => item.title.includes("Thịt Vai Bò"))?.title[0] ||
-      "Thịt Vai Bò",
-    image:
-      beefData.find((item) => item.title.includes("Thịt Vai Bò"))?.image || ""
+  {
+    title: "Gù Hoa - Trị giá 99.000 VND",
+    image: "https://tianlong.vn/Upload/Products/091224091038.jpg"
   },
-  DT: {
-    title:
-      beefData.find((item) => item.title.includes("Diềm Thăn"))?.title[0] ||
-      "Diềm Thăn",
-    image:
-      beefData.find((item) => item.title.includes("Diềm Thăn"))?.image || ""
+  {
+    title: "Thăn Đầu Rồng - Trị giá 99.000 VND",
+    image: "https://tianlong.vn/Upload/Products/091224091244.jpg"
   }
-};
+];
+
+// Tạo map viết tắt từ tên món (lấy ký tự đầu của từng từ, viết hoa, không lấy chữ "-" và sau đó)
+function getShortKey(title: string) {
+  // Lấy phần trước dấu "-" nếu có
+  const name = title.split("-")[0].trim();
+  // Lấy ký tự đầu của từng từ
+  return name
+    .split(" ")
+    .map((w) => w[0].toUpperCase())
+    .join("");
+}
+
+const beefMap: Record<string, { title: string; image: string }> = {};
+beefArray.forEach((item) => {
+  const key = getShortKey(item.title);
+  beefMap[key] = { title: item.title, image: item.image };
+});
 
 // Xác minh webhook (GET)
 export async function GET(req: NextRequest) {
@@ -58,6 +62,7 @@ export async function GET(req: NextRequest) {
 // Nhận & xử lý tin nhắn (POST)
 export async function POST(req: NextRequest) {
   const body = await req.json();
+  const tasks: Promise<any>[] = [];
 
   if (body.object === "page") {
     for (const entry of body.entry) {
@@ -77,8 +82,7 @@ export async function POST(req: NextRequest) {
           else if (beefKey === "DT") beefKey = "DT";
           const beef = beefMap[beefKey];
           if (beef) {
-            await sendBeefPrizeMessage(senderId, beef.title, beef.image);
-            // KHÔNG trả lời gì nữa
+            tasks.push(sendBeefPrizeMessage(senderId, beef.title, beef.image));
             continue;
           }
         }
@@ -89,10 +93,12 @@ export async function POST(req: NextRequest) {
         event.postback.payload === "Tôi muốn đặt bàn ngay"
       ) {
         const senderId = event.sender.id;
-        await sendMessage(senderId, "Tôi muốn đặt bàn ngay");
+        tasks.push(sendMessage(senderId, "Tôi muốn đặt bàn ngay"));
         continue;
       }
     }
+    // Gửi tin nhắn ra nền, không chờ
+    Promise.allSettled(tasks);
     return new NextResponse(null, { status: 200 });
   } else {
     return new NextResponse(null, { status: 404 });

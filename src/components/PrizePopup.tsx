@@ -98,13 +98,13 @@ export default function PrizePopup({
       if (copied) {
         setTimeout(() => {
           window.open(
-            `https://m.me/tianlonghcm?text=${encodeURIComponent(code)}`,
+            `https://m.me/Tien.phat.xyz.63631?text=${encodeURIComponent(code)}`,
             "_blank"
           );
         }, 600);
       } else {
         window.open(
-          `https://m.me/tianlonghcm?text=${encodeURIComponent(code)}`,
+          `https://m.me/xyz.63631?text=${encodeURIComponent(code)}`,
           "_blank"
         );
       }
@@ -116,7 +116,7 @@ export default function PrizePopup({
         } catch {}
       }
       window.open(
-        `https://m.me/tianlonghcm?text=${encodeURIComponent(code)}`,
+        `https://m.me/xyz.63631?text=${encodeURIComponent(code)}`,
         "_blank"
       );
     }

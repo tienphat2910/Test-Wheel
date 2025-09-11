@@ -71,7 +71,7 @@ export default function WheelSpinner({
     const desiredOffset = (180 - labelAngle + 360) % 360;
 
     const currentNormalizedRotation = rotation % 360;
-    const baseSpins = 360 * 5; // quay ít nhất 5 vòng
+    const baseSpins = 360 * 10; // quay ít nhất 5 vòng
     const finalTargetRotation = baseSpins + desiredOffset;
     const actualSpinAmount = finalTargetRotation - currentNormalizedRotation;
 
@@ -96,13 +96,15 @@ export default function WheelSpinner({
             md:w-[360px] md:h-auto
             /* Mobile custom size */
             block md:hidden w-[120vw] h-[120vw]
-          "
+            "
           style={{
             transform: `rotate(${rotation}deg)`,
             transition: isSpinning
               ? "transform 3s cubic-bezier(0.23, 1, 0.32, 1)"
-              : "none"
+              : "none",
+            cursor: isSpinning ? "default" : "pointer"
           }}
+          onClick={() => !isSpinning && spinWheel()}
         >
           <Image
             src="/assets/wheel.png"
@@ -120,8 +122,10 @@ export default function WheelSpinner({
             transform: `scale(${desktopScale}) rotate(${rotation}deg)`,
             transition: isSpinning
               ? "transform 3s cubic-bezier(0.23, 1, 0.32, 1)"
-              : "none"
+              : "none",
+            cursor: isSpinning ? "default" : "pointer"
           }}
+          onClick={() => !isSpinning && spinWheel()}
         >
           <Image
             src="/assets/wheel.png"

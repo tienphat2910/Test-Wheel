@@ -195,7 +195,7 @@ export default function BeefCarousel() {
             return (
               <div
                 key={idx}
-                className="beef-carousel-item flex-shrink-0 w-[240px] md:w-[300px] lg:w-[390px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-visible mx-auto absolute left-1/2 top-1/2"
+                className="beef-carousel-item flex-shrink-0 w-[240px] md:w-[300px] lg:w-[390px] h-[420px] md:h-[420px] lg:h-[580px] bg-white rounded-[30px] border-2 border-[#FFF3E2] shadow-lg p-4 md:p-6 flex flex-col items-start overflow-hidden mx-auto absolute left-1/2 top-1/2"
                 style={{
                   transform: `translate(-50%, -50%) ${style.transform}`,
                   zIndex: style.zIndex,
