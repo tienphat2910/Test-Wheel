@@ -88,21 +88,18 @@ export default function Footer() {
               CHI NHÁNH CÔNG TY CP TẦM NHÌN QUỐC TẾ ALADDIN
             </div>
             <div className="mb-2 block md:hidden">
-              - Địa chỉ: Số 43-45 Nguyễn Thị Thập KDC Him Lam, Phường Tân Hưng,
+              Địa chỉ: Số 43-45 Nguyễn Thị Thập KDC Him Lam, Phường Tân Hưng,
               Thành phố Hồ Chí Minh, Việt Nam
             </div>
             <div className="mb-2 hidden md:block">
-              - Địa chỉ: Số 43-45 Nguyễn Thị Thập KDC Him Lam, <br /> Phường Tân
+              Địa chỉ: Số 43-45 Nguyễn Thị Thập KDC Him Lam, <br /> Phường Tân
               Hưng, Thành phố Hồ Chí Minh, Việt Nam
             </div>
             <div className="mb-2 block md:hidden">
-              - Mã số thuế: 0107742477-001, do Phòng ĐKKD - Sở KH&ĐT TP. Hà Nội
-              cấp
+              Mã số thuế: 0107742477-001
             </div>
             <div className="mb-2 hidden md:block">
-              - Mã số thuế: 0107742477-001,
-              <br />
-              do Phòng ĐKKD - Sở KH&ĐT TP. Hà Nội cấp
+              Mã số thuế: 0107742477-001
             </div>
           </div>
           {/* Social icons */}
@@ -148,7 +145,7 @@ export default function Footer() {
             </a>
             {/* Facebook icon */}
             <a
-              href="https://www.facebook.com/tianlong.laubotuoitrieuchau"
+              href="https://www.facebook.com/TianLongHCM"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-[#FF5C1B] rounded-full w-10 h-10 flex items-center justify-center hover:bg-[#FF5C1B] transition"
@@ -180,7 +177,7 @@ export default function Footer() {
             >
               {/* Nút theo dõi trang */}
               <a
-                href="https://www.facebook.com/tianlong.laubotuoitrieuchau"
+                href="https://www.facebook.com/TianLongHCM"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center"
@@ -234,7 +231,7 @@ export default function Footer() {
               <button
                 onClick={() =>
                   window.open(
-                    "https://www.facebook.com/sharer/sharer.php?u=https://www.facebook.com/tianlong.laubotuoitrieuchau",
+                    "https://www.facebook.com/sharer/sharer.php?u=https://www.facebook.com/TianLongHCM",
                     "_blank"
                   )
                 }

@@ -45,7 +45,7 @@ export default function Home() {
             }}
           >
             {/* Logo gần text, không sát phải */}
-            <div className="absolute top-[12%] right-[15%] z-20 block">
+            <div className="absolute top-[12%] right-[23%] z-20 block">
               <Image
                 src="/assets/logo-tianlong.png"
                 alt="Tianlong Logo"
@@ -84,22 +84,14 @@ export default function Home() {
               <Image
                 src="/assets/logo-tianlong.png"
                 alt="Tianlong Logo"
-                width={90}
-                height={60}
-                className="w-[21%] h-auto min-w-[70px] max-w-[90px] mt-4"
+                width={110}
+                height={75}
+                className="w-[28%] h-auto min-w-[90px] max-w-[110px] mt-4"
                 style={{ opacity: 1, filter: "none" }}
-              />
-              {/* Text */}
-              <Image
-                src="/assets/text-xoay-bo-dung-gu.png"
-                alt="Xoay bò đúng gu"
-                width={300}
-                height={80}
-                className="w-full max-w-[300px] h-auto mb-4"
               />
               {/* WheelSpinner: KHÔNG absolute, đặt trong flow */}
               <div
-                className="flex flex-col items-center justify-end w-full mt-65"
+                className="flex flex-col items-center justify-end w-full mt-75"
                 style={{
                   maxWidth: 360,
                   minWidth: 320,
@@ -114,7 +106,7 @@ export default function Home() {
                     bottom: 0,
                     left: 0,
                     width: "100%",
-                    height: 180, // chỉnh số px này để tạo khoảng thụt xuống mong muốn
+                    height: 190, // chỉnh số px này để tạo khoảng thụt xuống mong muốn
                     background: "black",
                     zIndex: -1
                   }}
@@ -163,7 +155,7 @@ export default function Home() {
               className="
                 text-center text-white
                 w-full max-w-[396px] md:max-w-[900px] lg:max-w-[1200px]
-                text-[13px] md:text-[20px] lg:text-[28px]
+                text-[16px] md:text-[20px] lg:text-[28px]
                 leading-[22px] md:leading-[32px] lg:leading-[38px] kelson
               "
             >

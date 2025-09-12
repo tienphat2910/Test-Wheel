@@ -171,7 +171,31 @@ export default function LocationList() {
               style={{ minHeight: 110 }}
             >
               <div className="text-[16px] md:text-[20px] font-bold text-center leading-tight mb-2 kelson">
-                {loc.address}
+                {
+                  // Nếu địa chỉ chứa "Phường Tân Hưng", tách thành 2 dòng, không lặp dấu phẩy
+                  loc.address.includes("Phường Tân Hưng") ? (
+                    <>
+                      {(() => {
+                        const before = loc.address
+                          .split("Phường Tân Hưng")[0]
+                          .trim();
+                        // Xóa dấu phẩy cuối nếu có
+                        const beforeClean = before.endsWith(",")
+                          ? before.slice(0, -1)
+                          : before;
+                        return (
+                          <>
+                            {beforeClean},
+                            <br />
+                            Phường Tân Hưng
+                          </>
+                        );
+                      })()}
+                    </>
+                  ) : (
+                    loc.address
+                  )
+                }
               </div>
               <div className="text-[16px] md:text-[20px] font-bold kelson text-center flex items-center gap-2">
                 <svg
